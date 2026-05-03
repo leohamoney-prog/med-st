@@ -1,0 +1,485 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2685.4">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+    p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px 'Helvetica Neue'; color: #40a33f; -webkit-text-stroke: #40a33f}
+    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px 'Helvetica Neue'; color: #c9dbfc; color: rgba(201, 219, 252, 0.7); -webkit-text-stroke: rgba(201, 219, 252, 0.7)}
+    span.s1 {font-kerning: none; color: rgba(201, 219, 252, 0.7); background-color: #0f0f0f; -webkit-text-stroke: 0px rgba(201, 219, 252, 0.7)}
+    span.s2 {font-kerning: none; background-color: #0f0f0f}
+    span.s3 {font-kerning: none; color: #40a33f; background-color: #0f0f0f; -webkit-text-stroke: 0px #40a33f}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="ru"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1">&lt;meta charset="UTF-8"/&gt;</p>
+<p class="p1">&lt;meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/&gt;</p>
+<p class="p1">&lt;title&gt;med_st&lt;/title&gt;</p>
+<p class="p1">&lt;link rel="icon" href="data:image/svg+xml,&lt;svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'&gt;&lt;text y='.9em' font-size='90'&gt;🦷&lt;/text&gt;&lt;/svg&gt;"/&gt;</p>
+<p class="p1">&lt;style&gt;</p>
+<p class="p1">*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}</p>
+<p class="p1">:root{</p>
+<p class="p1"><span class="Apple-converted-space">  </span>--bg:#f7f6f3;--bg2:#fff;--bg3:#f0efe9;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>--text:#1a1a18;--text2:#6b6b67;--text3:#a0a09c;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>--border:#e0dfd8;--border2:#ccc;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>--blue-bg:#E6F1FB;--blue:#0C447C;--blue-bd:#B5D4F4;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>--green-bg:#E1F5EE;--green:#085041;--green-bd:#5DCAA5;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>--nav:56px;--side:210px;--r:8px;--rl:12px;</p>
+<p class="p1">}</p>
+<p class="p1">html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);font-size:15px;line-height:1.5}</p>
+<p class="p1">input,textarea,select,button{font-family:inherit;font-size:14px}</p>
+<p class="p1">.login-screen{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:1000}</p>
+<p class="p1">.lcard{background:var(--bg2);border:.5px solid var(--border);border-radius:var(--rl);padding:36px 32px;width:min(360px,90vw);text-align:center}</p>
+<p class="p1">.llogo{font-size:42px;margin-bottom:8px}</p>
+<p class="p1">.ltitle{font-size:22px;font-weight:700;color:var(--text)}</p>
+<p class="p1">.lsub{font-size:13px;color:var(--text2);margin-bottom:22px}</p>
+<p class="p1">.lerr{background:#FCEBEB;color:#A32D2D;border-radius:var(--r);padding:8px 12px;font-size:13px;margin-bottom:12px;display:none}</p>
+<p class="p1">.linput{width:100%;padding:11px 14px;border:.5px solid var(--border2);border-radius:var(--r);font-size:15px;margin-bottom:12px;background:var(--bg2);color:var(--text);outline:none}</p>
+<p class="p1">.linput:focus{border-color:var(--blue)}</p>
+<p class="p1">.lbtn{width:100%;padding:12px;background:var(--blue-bg);color:var(--blue);border:.5px solid var(--blue-bd);border-radius:var(--r);font-size:15px;font-weight:600;cursor:pointer}</p>
+<p class="p1">.lbtn:hover{opacity:.85}</p>
+<p class="p1">.app{display:flex;min-height:100vh}</p>
+<p class="p1">.sidebar{width:var(--side);flex-shrink:0;background:var(--bg2);border-right:.5px solid var(--border);position:fixed;top:0;left:0;bottom:0;z-index:50;display:flex;flex-direction:column;overflow-y:auto}</p>
+<p class="p1">.logo{padding:15px 16px;border-bottom:.5px solid var(--border)}</p>
+<p class="p1">.logo-name{font-size:16px;font-weight:700;color:var(--text)}</p>
+<p class="p1">.logo-sub{font-size:11px;color:var(--text2);margin-top:1px}</p>
+<p class="p1">.snav{flex:1;padding:6px 0}</p>
+<p class="p1">.ngl{font-size:10px;color:var(--text3);letter-spacing:.07em;padding:12px 16px 3px;text-transform:uppercase}</p>
+<p class="p1">.ni{display:flex;align-items:center;gap:9px;padding:10px 16px;font-size:13px;cursor:pointer;color:var(--text2);border-left:2.5px solid transparent;transition:background .1s}</p>
+<p class="p1">.ni:hover{background:var(--bg3);color:var(--text)}</p>
+<p class="p1">.ni.on{color:var(--blue);border-left-color:var(--blue);background:var(--blue-bg);font-weight:600}</p>
+<p class="p1">.nicon{font-size:15px;width:20px;text-align:center}</p>
+<p class="p1">.sfooter{padding:12px 16px;border-top:.5px solid var(--border)}</p>
+<p class="p1">.cur-pt{font-size:12px;color:var(--blue);background:var(--blue-bg);border-radius:var(--r);padding:6px 10px;margin-bottom:8px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:none}</p>
+<p class="p1">.logout{width:100%;padding:8px;background:transparent;border:.5px solid var(--border2);border-radius:var(--r);font-size:13px;color:var(--text2);cursor:pointer}</p>
+<p class="p1">.logout:hover{background:var(--bg3)}</p>
+<p class="p1">.bnav{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:.5px solid var(--border);z-index:50;height:var(--nav)}</p>
+<p class="p1">.bni{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:10px;color:var(--text2);border:none;background:transparent;cursor:pointer;padding:4px 0}</p>
+<p class="p1">.bni span:first-child{font-size:20px;line-height:1}</p>
+<p class="p1">.bni.on{color:var(--blue)}</p>
+<p class="p1">.main{flex:1;margin-left:var(--side);padding:22px 24px;min-width:0}</p>
+<p class="p1">.sec{display:none}.sec.on{display:block}</p>
+<p class="p1">.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;gap:12px;flex-wrap:wrap}</p>
+<p class="p1">.topbar h2{font-size:18px;font-weight:700;color:var(--text)}</p>
+<p class="p1">.pt-chip{font-size:12px;color:var(--blue);background:var(--blue-bg);border:.5px solid var(--blue-bd);border-radius:20px;padding:5px 12px;max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}</p>
+<p class="p1">.btn{padding:8px 16px;border-radius:var(--r);border:.5px solid var(--border2);background:var(--bg2);cursor:pointer;font-size:13px;color:var(--text);font-weight:500}</p>
+<p class="p1">.btn:hover{background:var(--bg3)}.btn:active{opacity:.7}</p>
+<p class="p1">.btn.pri{background:var(--blue-bg);color:var(--blue);border-color:var(--blue-bd)}</p>
+<p class="p1">.btn.sm{padding:6px 12px;font-size:12px}</p>
+<p class="p1">.btn.danger{background:#FCEBEB;color:#791F1F;border-color:#F09595}</p>
+<p class="p1">.card{background:var(--bg2);border:.5px solid var(--border);border-radius:var(--rl);padding:18px;margin-bottom:14px}</p>
+<p class="p1">.card-sub{font-size:12px;color:var(--text2);margin-bottom:14px}</p>
+<p class="p1">.card-actions{margin-top:16px;padding-top:14px;border-top:.5px solid var(--border);display:flex;gap:8px}</p>
+<p class="p1">.field{display:flex;flex-direction:column;gap:4px;margin-bottom:10px}</p>
+<p class="p1">.field.m0{margin-bottom:0}</p>
+<p class="p1">.field label{font-size:10px;font-weight:700;color:var(--text3);letter-spacing:.05em}</p>
+<p class="p1">.frow{display:grid;grid-template-columns:1fr 1fr;gap:12px}</p>
+<p class="p1">input[type=text],input[type=number],input[type=date],input[type=password],textarea,select{</p>
+<p class="p1"><span class="Apple-converted-space">  </span>padding:8px 11px;border:.5px solid var(--border2);border-radius:var(--r);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>background:var(--bg2);font-size:14px;color:var(--text);width:100%;outline:none}</p>
+<p class="p1">input:focus,textarea:focus,select:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(12,68,124,.08)}</p>
+<p class="p1">textarea{resize:none;font-family:inherit}</p>
+<p class="p1">.search-inp{width:100%;margin-bottom:16px;padding:10px 14px;border:.5px solid var(--border2);border-radius:var(--rl);font-size:14px;background:var(--bg2);color:var(--text);outline:none}</p>
+<p class="p1">.search-inp:focus{border-color:var(--blue)}</p>
+<p class="p1">.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;margin-bottom:18px}</p>
+<p class="p1">.stat{background:var(--bg2);border:.5px solid var(--border);border-radius:var(--r);padding:12px;text-align:center}</p>
+<p class="p1">.stat-val{font-size:22px;font-weight:700;color:var(--text)}</p>
+<p class="p1">.stat-lbl{font-size:11px;color:var(--text2);margin-top:2px}</p>
+<p class="p1">.pt-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px}</p>
+<p class="p1">.pt-card{background:var(--bg2);border:.5px solid var(--border);border-radius:var(--rl);padding:16px;cursor:pointer;transition:border-color .15s,box-shadow .15s}</p>
+<p class="p1">.pt-card:hover{border-color:var(--blue-bd);box-shadow:0 2px 10px rgba(0,0,0,.07)}</p>
+<p class="p1">.pt-hdr{display:flex;align-items:center;gap:10px;margin-bottom:8px}</p>
+<p class="p1">.avatar{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;background:var(--blue-bg);color:var(--blue)}</p>
+<p class="p1">.pt-name{font-size:14px;font-weight:600;color:var(--text)}</p>
+<p class="p1">.pt-phone{font-size:12px;color:var(--text2);margin-top:1px}</p>
+<p class="p1">.pt-note{font-size:12px;color:var(--text2);line-height:1.5;padding-top:8px;border-top:.5px solid var(--border);margin-top:8px}</p>
+<p class="p1">.pt-tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px}</p>
+<p class="p1">.tag{font-size:11px;padding:3px 8px;border-radius:20px;font-weight:500}</p>
+<p class="p1">.tag-al{background:#FCEBEB;color:#A32D2D}</p>
+<p class="p1">.empty{text-align:center;padding:48px 16px;color:var(--text2);font-size:14px}</p>
+<p class="p1">.status-bar{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:14px}</p>
+<p class="p1">.sbtn{padding:6px 12px;border-radius:20px;border:1.5px solid;font-size:12px;font-weight:600;cursor:pointer}</p>
+<p class="p1">.sbtn.sel{box-shadow:0 0 0 2.5px var(--text)}</p>
+<p class="p1">.jaw-lbl{font-size:10px;color:var(--text2);margin-bottom:5px;letter-spacing:.03em;font-weight:500}</p>
+<p class="p1">.teeth-row{display:grid;grid-template-columns:repeat(16,1fr);gap:2px}</p>
+<p class="p1">.tooth{border-radius:5px;border:1px solid var(--border);cursor:pointer;text-align:center;padding:5px 1px;transition:transform .1s}</p>
+<p class="p1">.tooth:active{transform:scale(.93)}</p>
+<p class="p1">.tn{font-size:8px;color:var(--text2);display:block;line-height:1}</p>
+<p class="p1">.ti{font-size:12px;display:block;line-height:1.6}</p>
+<p class="p1">.ts{font-size:7px;display:block;line-height:1.3;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}</p>
+<p class="p1">.jaw-gap{height:5px}</p>
+<p class="p1">.t-H{background:#fff}.t-H .ts{color:#ccc}</p>
+<p class="p1">.t-C{background:#FCEBEB;border-color:#F09595}.t-C .tn,.t-C .ts{color:#A32D2D}</p>
+<p class="p1">.t-F{background:#E1F5EE;border-color:#5DCAA5}.t-F .tn,.t-F .ts{color:#0F6E56}</p>
+<p class="p1">.t-P{background:#FAEEDA;border-color:#EF9F27}.t-P .tn,.t-P .ts{color:#854F0B}</p>
+<p class="p1">.t-R{background:#EEEDFE;border-color:#AFA9EC}.t-R .tn,.t-R .ts{color:#534AB7}</p>
+<p class="p1">.t-K{background:#E6F1FB;border-color:#85B7EB}.t-K .tn,.t-K .ts{color:#185FA5}</p>
+<p class="p1">.t-I{background:#FBEAF0;border-color:#ED93B1}.t-I .tn,.t-I .ts{color:#993556}</p>
+<p class="p1">.t-M{background:#F1EFE8;border-color:#B4B2A9}.t-M .tn,.t-M .ts{color:#5F5E5A}</p>
+<p class="p1">.t-PL{background:#EAF3DE;border-color:#97C459}.t-PL .tn,.t-PL .ts{color:#3B6D11}</p>
+<p class="p1">.t-W{background:#f0f0f0;opacity:.5}</p>
+<p class="p1">.leg-row{display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:12px;padding-top:12px;border-top:.5px solid var(--border)}</p>
+<p class="p1">.leg{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text2)}</p>
+<p class="p1">.ld{width:12px;height:12px;border-radius:3px;border:1px solid;flex-shrink:0}</p>
+<p class="p1">.det-panel{margin-top:14px;background:var(--bg3);border-radius:var(--r);padding:14px;display:none}</p>
+<p class="p1">.det-panel.show{display:block}</p>
+<p class="p1">.det-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}</p>
+<p class="p1">.det-num{font-size:16px;font-weight:700;color:var(--text)}</p>
+<p class="p1">.det-slbl{font-size:12px;font-weight:600;margin-top:2px}</p>
+<p class="p1">.det-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}</p>
+<p class="p1">.photo-zone{border:1.5px dashed var(--border2);border-radius:var(--r);padding:16px;text-align:center;cursor:pointer;margin-top:10px}</p>
+<p class="p1">.photo-zone:hover{background:var(--bg3)}</p>
+<p class="p1">.photo-zone p{font-size:12px;color:var(--text2);margin-top:4px}</p>
+<p class="p1">.photos-grid{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}</p>
+<p class="p1">.photo-thumb{width:64px;height:64px;object-fit:cover;border-radius:var(--r);border:.5px solid var(--border)}</p>
+<p class="p1">.twrap{overflow-x:auto;-webkit-overflow-scrolling:touch}</p>
+<p class="p1">table{width:100%;border-collapse:collapse;font-size:13px;min-width:480px}</p>
+<p class="p1">th{text-align:left;font-size:11px;font-weight:700;color:var(--text2);padding:8px 10px;border-bottom:.5px solid var(--border);white-space:nowrap;letter-spacing:.03em}</p>
+<p class="p1">td{padding:9px 10px;border-bottom:.5px solid var(--border);color:var(--text);vertical-align:middle}</p>
+<p class="p1">tr:last-child td{border-bottom:none}</p>
+<p class="p1">tr:hover td{background:var(--bg3)}</p>
+<p class="p1">.sum-line{display:flex;justify-content:flex-end;padding-top:10px;font-size:13px;font-weight:700;gap:8px}</p>
+<p class="p1">.c-green{color:#0F6E56}.c-orange{color:#854F0B}</p>
+<p class="p1">.muted{color:var(--text2)}.fw{font-weight:700}</p>
+<p class="p1">.add-form{margin-bottom:16px;padding-bottom:16px;border-bottom:.5px solid var(--border)}</p>
+<p class="p1">.arow{display:grid;gap:8px;margin-bottom:10px}</p>
+<p class="p1">.form-btns{display:flex;gap:8px;flex-wrap:wrap}</p>
+<p class="p1">.del{padding:5px 9px;border-radius:var(--r);border:.5px solid var(--border);background:transparent;cursor:pointer;font-size:12px;color:var(--text2)}</p>
+<p class="p1">.del:hover{background:#FCEBEB;color:#791F1F;border-color:#F09595}</p>
+<p class="p1">.tot-card{background:var(--bg3);border-radius:var(--r);padding:14px;margin-bottom:14px}</p>
+<p class="p1">.tot-row{display:flex;justify-content:space-between;align-items:center;font-size:14px;padding:6px 0;border-bottom:.5px solid var(--border)}</p>
+<p class="p1">.tot-row:last-child{border:none;padding-top:12px;font-size:16px;font-weight:700}</p>
+<p class="p1">.month-title{font-size:14px;font-weight:700;color:var(--text);min-width:140px;text-align:center}</p>
+<p class="p1">.cal-header{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-bottom:3px}</p>
+<p class="p1">.cal-dn{text-align:center;font-size:11px;color:var(--text2);padding:4px}</p>
+<p class="p1">.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}</p>
+<p class="p1">.cal-day{text-align:center;padding:9px 4px;border-radius:var(--r);font-size:13px;cursor:pointer;border:.5px solid transparent;color:var(--text2)}</p>
+<p class="p1">.cal-day:hover{background:var(--bg3)}</p>
+<p class="p1">.cal-day.work{background:#E1F5EE;color:#085041;border-color:#5DCAA5;font-weight:700}</p>
+<p class="p1">.cal-day.today{border-color:var(--blue)!important}</p>
+<p class="p1">.cal-day.off{opacity:.35}</p>
+<p class="p1">.pcat{font-size:11px;font-weight:700;color:var(--text2);padding:10px 8px 5px;border-bottom:.5px solid var(--border);letter-spacing:.06em;text-transform:uppercase;outline:none;cursor:text}</p>
+<p class="p1">.pcat:focus{background:var(--blue-bg);color:var(--blue)}</p>
+<p class="p1">.prow{display:grid;grid-template-columns:1fr 130px 36px;align-items:center;gap:8px;padding:9px 8px;border-bottom:.5px solid var(--border)}</p>
+<p class="p1">.prow:last-child{border-bottom:none}</p>
+<p class="p1">.pname{font-size:13px;color:var(--text);outline:none;cursor:text;border-radius:4px;padding:1px 4px}</p>
+<p class="p1">.pname:focus{background:var(--blue-bg)}</p>
+<p class="p1">.pval{font-size:13px;font-weight:700;color:var(--text);outline:none;cursor:text;text-align:right;border-radius:4px;padding:1px 4px}</p>
+<p class="p1">.pval:focus{background:var(--blue-bg)}</p>
+<p class="p1">.pval.empty{color:var(--text3)}</p>
+<p class="p1">.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;align-items:center;justify-content:center;padding:16px}</p>
+<p class="p1">.modal-overlay.show{display:flex}</p>
+<p class="p1">.modal{background:var(--bg2);border-radius:var(--rl);width:min(480px,100%);max-height:90vh;display:flex;flex-direction:column;overflow:hidden}</p>
+<p class="p1">.mhdr{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:.5px solid var(--border);flex-shrink:0}</p>
+<p class="p1">.mtitle{font-size:16px;font-weight:700;color:var(--text)}</p>
+<p class="p1">.mclose{background:transparent;border:none;font-size:20px;cursor:pointer;color:var(--text2);padding:2px 6px;line-height:1}</p>
+<p class="p1">.mclose:hover{color:var(--text)}</p>
+<p class="p1">.mbody{padding:20px;overflow-y:auto;flex:1}</p>
+<p class="p1">.mfooter{padding:14px 20px;border-top:.5px solid var(--border);display:flex;justify-content:flex-end;gap:8px;flex-shrink:0}</p>
+<p class="p1">.price-pick-item{padding:10px 8px;border-bottom:.5px solid var(--border);cursor:pointer;border-radius:var(--r)}</p>
+<p class="p1">.price-pick-item:hover{background:var(--blue-bg)}</p>
+<p class="p1">.price-pick-item:last-child{border-bottom:none}</p>
+<p class="p1">.ppi-name{font-size:13px;color:var(--text);font-weight:500}</p>
+<p class="p1">.ppi-meta{font-size:11px;color:var(--text2);margin-top:2px}</p>
+<p class="p1">.badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600}</p>
+<p class="p1">.badge-warn{background:#FBEAF0;color:#993556}</p>
+<p class="p1">.toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(20px);background:#1a1a18;color:#fff;padding:10px 20px;border-radius:20px;font-size:13px;opacity:0;transition:opacity .25s,transform .25s;pointer-events:none;z-index:999;white-space:nowrap}</p>
+<p class="p1">.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}</p>
+<p class="p1">@media(max-width:680px){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.sidebar{display:none}.bnav{display:flex}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.main{margin-left:0;padding:14px 12px;padding-bottom:calc(var(--nav) + 14px)}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.teeth-row{gap:1px}.tooth{padding:3px 0}.ti{font-size:10px}.ts{font-size:6px}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.det-grid{grid-template-columns:1fr}.arow{grid-template-columns:1fr!important}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.frow{grid-template-columns:1fr}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.stats-row{grid-template-columns:repeat(2,1fr)}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.topbar h2{font-size:16px}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.toast{bottom:calc(var(--nav) + 10px)}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.prow{grid-template-columns:1fr 90px 32px}</p>
+<p class="p1">}</p>
+<p class="p1">@media(min-width:681px){.arow.r4{grid-template-columns:2fr 1fr 1fr 100px}}</p>
+<p class="p1">&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;div id="loginScreen" class="login-screen"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="lcard"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="llogo"&gt;🦷&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="ltitle"&gt;med_st&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="lsub"&gt;Стоматологическая база&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div id="loginErr" class="lerr"&gt;Неверный пароль&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;input type="password" id="loginPass" class="linput" placeholder="Введите пароль" onkeydown="if(event.key==='Enter')doLogin()"/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;button class="lbtn" onclick="doLogin()"&gt;Войти&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;div id="app" class="app" style="display:none"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;aside class="sidebar"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="logo"&gt;&lt;div class="logo-name"&gt;🦷 med_st&lt;/div&gt;&lt;div class="logo-sub"&gt;Стоматологическая база&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;nav class="snav"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="ngl"&gt;Пациенты&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="ni on" data-s="patients" onclick="nav('patients',this)"&gt;&lt;span class="nicon"&gt;👥&lt;/span&gt;База пациентов&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="ngl"&gt;Карточка пациента&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="ni" data-s="formula" onclick="nav('formula',this)"&gt;&lt;span class="nicon"&gt;🦷&lt;/span&gt;Зубная формула&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="ni" data-s="done" onclick="nav('done',this)"&gt;&lt;span class="nicon"&gt;✅&lt;/span&gt;Выполнено&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="ni" data-s="plan" onclick="nav('plan',this)"&gt;&lt;span class="nicon"&gt;📋&lt;/span&gt;План лечения&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="ni" data-s="total" onclick="nav('total',this)"&gt;&lt;span class="nicon"&gt;📊&lt;/span&gt;Итог&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="ngl"&gt;Клиника&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="ni" data-s="schedule" onclick="nav('schedule',this)"&gt;&lt;span class="nicon"&gt;📅&lt;/span&gt;Расписание&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="ni" data-s="price" onclick="nav('price',this)"&gt;&lt;span class="nicon"&gt;💰&lt;/span&gt;Прайс-лист&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/nav&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="sfooter"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div id="curPt" class="cur-pt"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;button class="logout" onclick="doLogout()"&gt;Выйти&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/aside&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;nav class="bnav"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;button class="bni on" data-s="patients" onclick="nav('patients',this)"&gt;&lt;span&gt;👥&lt;/span&gt;&lt;span&gt;Пациенты&lt;/span&gt;&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;button class="bni" data-s="formula" onclick="nav('formula',this)"&gt;&lt;span&gt;🦷&lt;/span&gt;&lt;span&gt;Формула&lt;/span&gt;&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;button class="bni" data-s="done" onclick="nav('done',this)"&gt;&lt;span&gt;✅&lt;/span&gt;&lt;span&gt;Сделано&lt;/span&gt;&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;button class="bni" data-s="plan" onclick="nav('plan',this)"&gt;&lt;span&gt;📋&lt;/span&gt;&lt;span&gt;План&lt;/span&gt;&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;button class="bni" data-s="price" onclick="nav('price',this)"&gt;&lt;span&gt;💰&lt;/span&gt;&lt;span&gt;Прайс&lt;/span&gt;&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/nav&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;main class="main"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;section class="sec on" id="s-patients"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="topbar"&gt;&lt;h2&gt;База пациентов&lt;/h2&gt;&lt;button class="btn pri" onclick="openPtModal()"&gt;+ Новый пациент&lt;/button&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;input class="search-inp" id="ptSearch" placeholder="🔍 Поиск по имени или телефону..." oninput="renderPts()"/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="stats-row" id="statsRow"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="pt-grid" id="ptGrid"&gt;&lt;div class="empty"&gt;Загрузка...&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/section&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;section class="sec" id="s-formula"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="topbar"&gt;&lt;h2&gt;Зубная формула&lt;/h2&gt;&lt;div class="pt-chip" id="chipFormula"&gt;Пациент не выбран&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="card-sub"&gt;Выберите статус → нажмите на зуб. Повторное нажатие — карточка зуба.&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="status-bar" id="statusBar"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="jaw-lbl"&gt;Верхняя челюсть (18 → 28)&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="teeth-row" id="upper"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="jaw-gap"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="teeth-row" id="lower"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="jaw-lbl" style="margin-top:4px"&gt;Нижняя челюсть (48 → 38)&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="leg-row" id="legend"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="det-panel" id="detPanel"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="det-hdr"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div&gt;&lt;div class="det-num" id="detNum"&gt;Зуб —&lt;/div&gt;&lt;div class="det-slbl" id="detSlbl"&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div style="display:flex;gap:6px"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;button class="btn sm pri" onclick="saveDet()"&gt;Сохранить&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;button class="btn sm" onclick="closeDet()"&gt;✕&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="det-grid"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="field"&gt;&lt;label&gt;ПОВЕРХНОСТИ&lt;/label&gt;&lt;textarea id="detSurf" rows="2" placeholder="Мезиальная, дистальная, окклюзионная..."&gt;&lt;/textarea&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="field"&gt;&lt;label&gt;ЗАМЕТКА ВРАЧА&lt;/label&gt;&lt;textarea id="detNote" rows="2" placeholder="Симптомы, рекомендации..."&gt;&lt;/textarea&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="field"&gt;&lt;label&gt;ДАТА ВМЕШАТЕЛЬСТВА&lt;/label&gt;&lt;input type="date" id="detDate" style="max-width:180px"/&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="photo-zone" onclick="document.getElementById('photoIn').click()"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div style="font-size:24px"&gt;📷&lt;/div&gt;&lt;p&gt;Нажмите для добавления фото зуба&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;input type="file" id="photoIn" accept="image/*" multiple style="display:none" onchange="addPhotos(event)"/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="photos-grid" id="photosGrid"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="card-actions"&gt;&lt;button class="btn pri" onclick="saveFormula()"&gt;💾 Сохранить формулу&lt;/button&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/section&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;section class="sec" id="s-done"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="topbar"&gt;&lt;h2&gt;Выполненные манипуляции&lt;/h2&gt;&lt;div class="pt-chip" id="chipDone"&gt;Пациент не выбран&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="add-form"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="arow r4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="field m0"&gt;&lt;label&gt;МАНИПУЛЯЦИЯ&lt;/label&gt;&lt;input type="text" id="d_proc" placeholder="Название..."/&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="field m0"&gt;&lt;label&gt;ЗУБ&lt;/label&gt;&lt;input type="text" id="d_tooth" placeholder="16"/&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="field m0"&gt;&lt;label&gt;ПОВЕРХНОСТЬ&lt;/label&gt;&lt;input type="text" id="d_surf" placeholder="Мез, Дист..."/&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="field m0"&gt;&lt;label&gt;ЦЕНА ₽&lt;/label&gt;&lt;input type="number" id="d_price" placeholder="0"/&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="form-btns"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="btn pri" onclick="addDone()"&gt;+ Добавить&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="btn sm" onclick="openPriceModal('done')"&gt;Из прайса&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="twrap"&gt;&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Дата&lt;/th&gt;&lt;th&gt;Манипуляция&lt;/th&gt;&lt;th&gt;Зуб&lt;/th&gt;&lt;th&gt;Поверхность&lt;/th&gt;&lt;th&gt;Сумма&lt;/th&gt;&lt;th&gt;&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody id="doneTb"&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="sum-line"&gt;Итого: &lt;span id="doneSum" class="c-green"&gt;0 ₽&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="card-actions"&gt;&lt;button class="btn pri" onclick="saveTreat()"&gt;💾 Сохранить&lt;/button&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/section&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;section class="sec" id="s-plan"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="topbar"&gt;&lt;h2&gt;План лечения&lt;/h2&gt;&lt;div class="pt-chip" id="chipPlan"&gt;Пациент не выбран&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="add-form"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="arow r4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="field m0"&gt;&lt;label&gt;МАНИПУЛЯЦИЯ&lt;/label&gt;&lt;input type="text" id="p_proc" placeholder="Название..."/&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="field m0"&gt;&lt;label&gt;ЗУБ&lt;/label&gt;&lt;input type="text" id="p_tooth" placeholder="36"/&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="field m0"&gt;&lt;label&gt;ПОВЕРХНОСТЬ&lt;/label&gt;&lt;input type="text" id="p_surf" placeholder="Мез, Дист..."/&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="field m0"&gt;&lt;label&gt;ЦЕНА ₽&lt;/label&gt;&lt;input type="number" id="p_price" placeholder="0"/&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="form-btns"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="btn pri" onclick="addPlan()"&gt;+ Добавить&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="btn sm" onclick="openPriceModal('plan')"&gt;Из прайса&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="twrap"&gt;&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Приоритет&lt;/th&gt;&lt;th&gt;Манипуляция&lt;/th&gt;&lt;th&gt;Зуб&lt;/th&gt;&lt;th&gt;Поверхность&lt;/th&gt;&lt;th&gt;Ориент. стоим.&lt;/th&gt;&lt;th&gt;&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody id="planTb"&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="sum-line"&gt;Ориент.: &lt;span id="planSum" class="c-orange"&gt;0 ₽&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="card-actions"&gt;&lt;button class="btn pri" onclick="saveTreat()"&gt;💾 Сохранить&lt;/button&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/section&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;section class="sec" id="s-total"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="topbar"&gt;&lt;h2&gt;Итог&lt;/h2&gt;&lt;div class="pt-chip" id="chipTotal"&gt;Пациент не выбран&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="tot-card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="tot-row"&gt;&lt;span class="muted"&gt;Выполнено (оплачено)&lt;/span&gt;&lt;span class="c-green fw" id="tot_d"&gt;0 ₽&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="tot-row"&gt;&lt;span class="muted"&gt;Запланировано (ориент.)&lt;/span&gt;&lt;span class="c-orange fw" id="tot_p"&gt;0 ₽&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="tot-row"&gt;&lt;span&gt;Полный курс лечения&lt;/span&gt;&lt;span id="tot_all"&gt;0 ₽&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="field"&gt;&lt;label&gt;ЗАМЕТКА ПО ОПЛАТЕ&lt;/label&gt;&lt;textarea id="payNote" rows="3" placeholder="Рассрочка, предоплата, страховка, скидка..."&gt;&lt;/textarea&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="card-actions"&gt;&lt;button class="btn pri" onclick="saveTreat()"&gt;💾 Сохранить&lt;/button&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/section&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;section class="sec" id="s-schedule"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="topbar"&gt;&lt;h2&gt;Расписание&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div style="display:flex;gap:8px;align-items:center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;button class="btn sm" onclick="schedPrev()"&gt;←&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;span id="schedTitle" class="month-title"&gt;&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;button class="btn sm" onclick="schedNext()"&gt;→&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="card-sub"&gt;Нажмите на день чтобы отметить рабочим / выходным.&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="cal-header" id="calHdr"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="cal-grid" id="calGrid"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="leg-row" style="margin-top:12px"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="leg"&gt;&lt;div class="ld" style="background:#E1F5EE;border-color:#5DCAA5"&gt;&lt;/div&gt;Рабочий день&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="card-actions"&gt;&lt;button class="btn pri" onclick="saveSchedule()"&gt;💾 Сохранить график&lt;/button&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/section&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;section class="sec" id="s-price"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="topbar"&gt;&lt;h2&gt;Прайс-лист&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;input type="text" id="priceQ" placeholder="Поиск..." style="width:150px" oninput="filterPrice()"/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;button class="btn sm pri" onclick="addCat()"&gt;+ Категория&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;button class="btn sm pri" onclick="addPriceItem()"&gt;+ Услуга&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="card-sub"&gt;Нажмите на название или цену — редактируйте прямо здесь. Жмите «Сохранить прайс» когда закончите.&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div id="priceList"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="card-actions"&gt;&lt;button class="btn pri" onclick="savePriceList()"&gt;💾 Сохранить прайс&lt;/button&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/section&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/main&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;div class="modal-overlay" id="ptModal" onclick="if(event.target===this)closePtModal()"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="modal"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="mhdr"&gt;&lt;div class="mtitle" id="ptModalTitle"&gt;Новый пациент&lt;/div&gt;&lt;button class="mclose" onclick="closePtModal()"&gt;✕&lt;/button&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="mbody"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="field"&gt;&lt;label&gt;ФИО *&lt;/label&gt;&lt;input type="text" id="m_name" placeholder="Иванова Мария Сергеевна"/&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="frow"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="field"&gt;&lt;label&gt;ТЕЛЕФОН&lt;/label&gt;&lt;input type="text" id="m_phone" placeholder="+7 900 000-00-00"/&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="field"&gt;&lt;label&gt;ДАТА РОЖДЕНИЯ&lt;/label&gt;&lt;input type="date" id="m_dob"/&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="field"&gt;&lt;label&gt;АЛЛЕРГИИ&lt;/label&gt;&lt;input type="text" id="m_allergy" placeholder="Лидокаин, латекс..."/&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="field"&gt;&lt;label&gt;ОСОБЕННОСТИ / ОПИСАНИЕ&lt;/label&gt;&lt;textarea id="m_note" rows="3" placeholder="Бруксизм, повышенный рвотный рефлекс..."&gt;&lt;/textarea&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="mfooter"&gt;&lt;button class="btn" onclick="closePtModal()"&gt;Отмена&lt;/button&gt;&lt;button class="btn pri" onclick="savePt()"&gt;Сохранить&lt;/button&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;div class="modal-overlay" id="priceModal" onclick="if(event.target===this)closePriceModal()"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="modal"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="mhdr"&gt;&lt;div class="mtitle"&gt;Выбрать из прайса&lt;/div&gt;&lt;button class="mclose" onclick="closePriceModal()"&gt;✕&lt;/button&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="mbody" style="padding-bottom:0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;input type="text" id="modalQ" placeholder="Поиск услуги..." oninput="renderModal()" style="margin-bottom:10px"/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div id="modalList" style="max-height:340px;overflow-y:auto"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="mfooter"&gt;&lt;button class="btn" onclick="closePriceModal()"&gt;Закрыть&lt;/button&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;div class="toast" id="toast"&gt;&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;script type="module"&gt;</p>
+<p class="p1">import{initializeApp}from'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';</p>
+<p class="p1">import{getFirestore,doc,getDoc,setDoc,collection,getDocs,addDoc,updateDoc,serverTimestamp}from'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';</p>
+<p class="p2"><br></p>
+<p class="p1">// ════════════════════════════════════════════════</p>
+<p class="p1">//<span class="Apple-converted-space">  </span>⚙️ ВСТАВЬ СВОИ ДАННЫЕ FIREBASE ЗДЕСЬ</p>
+<p class="p1">// ════════════════════════════════════════════════</p>
+<p class="p1">const CFG={</p>
+<p class="p3"><span class="s1">apiKey: </span><span class="s2">"AIzaSyC8cNSPRebtht_EeyfgoX6hsr8yS0v6YSQ"</span><span class="s1">,</span></p>
+<p class="p3"><span class="s1">  authDomain: </span><span class="s2">"st-clinic-5918.firebaseapp.com"</span><span class="s1">,</span></p>
+<p class="p3"><span class="s1">  projectId: </span><span class="s2">"st-clinic-5918"</span><span class="s1">,</span></p>
+<p class="p3"><span class="s1">  storageBucket: </span><span class="s2">"st-clinic-5918.firebasestorage.app"</span><span class="s1">,</span></p>
+<p class="p4"><span class="s2">  messagingSenderId: </span><span class="s3">"494875696146"</span><span class="s2">,</span></p>
+<p class="p3"><span class="s1">  appId: </span><span class="s2">"1:494875696146:web:5a33a501e8d41855334ccb"</span><span class="s1">,</span></p>
+<p class="p1">};</p>
+<p class="p1">const PASSWORD:"A245173890a.",</p>
+<p class="p1">// ════════════════════════════════════════════════</p>
+<p class="p2"><br></p>
+<p class="p1">const app=initializeApp(CFG);</p>
+<p class="p1">const db=getFirestore(app);</p>
+<p class="p1">window.doLogin=()=&gt;{if(document.getElementById('loginPass').value===PASSWORD){localStorage.setItem('medst_ok','1');document.getElementById('loginScreen').style.display='none';document.getElementById('app').style.display='flex';boot();}else{document.getElementById('loginErr').style.display='block';}};</p>
+<p class="p1">window.doLogout=()=&gt;{localStorage.removeItem('medst_ok');location.reload();};</p>
+<p class="p1">if(localStorage.getItem('medst_ok')){document.getElementById('loginScreen').style.display='none';document.getElementById('app').style.display='flex';}</p>
+<p class="p1">let patients=[],curId=null,curName='',teeth={},doneList=[],planList=[],payNote='',priceData=defaultPrice(),schedData={},schedY=new Date().getFullYear(),schedM=new Date().getMonth(),curStatus='C',curTooth=null,modalTarget=null,editId=null;</p>
+<p class="p1">const upper=[18,17,16,15,14,13,12,11,21,22,23,24,25,26,27,28],lower=[48,47,46,45,44,43,42,41,31,32,33,34,35,36,37,38],wisdom=new Set([18,28,38,48]);</p>
+<p class="p1">const ST=[{k:'H',l:'Здоров',i:'○',bg:'#fff',bc:'#ccc',tc:'#aaa'},{k:'C',l:'Кариес',i:'◆',bg:'#FCEBEB',bc:'#F09595',tc:'#A32D2D'},{k:'F',l:'Пломба',i:'■',bg:'#E1F5EE',bc:'#5DCAA5',tc:'#0F6E56'},{k:'P',l:'Пульпит',i:'▲',bg:'#FAEEDA',bc:'#EF9F27',tc:'#854F0B'},{k:'R',l:'Периодонтит',i:'◉',bg:'#EEEDFE',bc:'#AFA9EC',tc:'#534AB7'},{k:'K',l:'Коронка',i:'⬡',bg:'#E6F1FB',bc:'#85B7EB',tc:'#185FA5'},{k:'I',l:'Имплант',i:'✦',bg:'#FBEAF0',bc:'#ED93B1',tc:'#993556'},{k:'M',l:'Удалён',i:'×',bg:'#F1EFE8',bc:'#B4B2A9',tc:'#5F5E5A'},{k:'PL',l:'Планируется',i:'?',bg:'#EAF3DE',bc:'#97C459',tc:'#3B6D11'}];</p>
+<p class="p1">const SM={};ST.forEach(s=&gt;SM[s.k]=s);</p>
+<p class="p1">async function boot(){buildStatusBar();buildLegend();initTeeth();renderAll();buildCalHdr();renderCal();await loadPts();await loadPrice();}</p>
+<p class="p1">if(localStorage.getItem('medst_ok'))boot();</p>
+<p class="p1">window.nav=(sec,el)=&gt;{document.querySelectorAll('.sec').forEach(s=&gt;s.className='sec');document.getElementById('s-'+sec).className='sec on';document.querySelectorAll('.ni,.bni').forEach(n=&gt;n.classList.remove('on'));document.querySelectorAll(`[data-s="${sec}"]`).forEach(n=&gt;n.classList.add('on'));};</p>
+<p class="p1">const toast=msg=&gt;{const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=&gt;t.classList.remove('show'),2500);};</p>
+<p class="p1">async function loadPts(){try{const snap=await getDocs(collection(db,'patients'));patients=[];snap.forEach(d=&gt;patients.push({id:d.id,...d.data()}));patients.sort((a,b)=&gt;(a.name||'').localeCompare(b.name||'','ru'));renderPts();renderStats();}catch(e){document.getElementById('ptGrid').innerHTML='&lt;div class="empty"&gt;⚠️ Ошибка Firebase.&lt;br&gt;Проверь config и правила Firestore.&lt;/div&gt;';}}</p>
+<p class="p1">window.renderPts=()=&gt;{const q=document.getElementById('ptSearch').value.toLowerCase(),grid=document.getElementById('ptGrid'),list=patients.filter(p=&gt;(p.name||'').toLowerCase().includes(q)||(p.phone||'').includes(q));if(!list.length){grid.innerHTML='&lt;div class="empty"&gt;Пациенты не найдены&lt;/div&gt;';return;}grid.innerHTML=list.map(p=&gt;{const ini=(p.name||'?').split(' ').map(w=&gt;w[0]).join('').slice(0,2).toUpperCase(),age=p.dob?getAge(p.dob):'';return`&lt;div class="pt-card" onclick="openPt('${p.id}')"&gt;&lt;div class="pt-hdr"&gt;&lt;div class="avatar"&gt;${ini}&lt;/div&gt;&lt;div&gt;&lt;div class="pt-name"&gt;${p.name||'—'}&lt;/div&gt;&lt;div class="pt-phone"&gt;${p.phone||''}${age?' · '+age+' л.':''}&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;${p.allergy?`&lt;div class="pt-tags"&gt;&lt;span class="tag tag-al"&gt;⚠ ${p.allergy}&lt;/span&gt;&lt;/div&gt;`:''}${p.note?`&lt;div class="pt-note"&gt;${p.note}&lt;/div&gt;`:''}&lt;/div&gt;`;}).join('');};</p>
+<p class="p1">const getAge=d=&gt;{const b=new Date(d),n=new Date();let a=n.getFullYear()-b.getFullYear();if(n&lt;new Date(n.getFullYear(),b.getMonth(),b.getDate()))a--;return a;};</p>
+<p class="p1">function renderStats(){document.getElementById('statsRow').innerHTML=`&lt;div class="stat"&gt;&lt;div class="stat-val"&gt;${patients.length}&lt;/div&gt;&lt;div class="stat-lbl"&gt;Пациентов&lt;/div&gt;&lt;/div&gt;&lt;div class="stat"&gt;&lt;div class="stat-val"&gt;${new Date().toLocaleDateString('ru-RU').slice(0,5)}&lt;/div&gt;&lt;div class="stat-lbl"&gt;Сегодня&lt;/div&gt;&lt;/div&gt;`;}</p>
+<p class="p1">window.openPt=async id=&gt;{const p=patients.find(x=&gt;x.id===id);if(!p)return;curId=id;curName=p.name||'—';['chipFormula','chipDone','chipPlan','chipTotal'].forEach(c=&gt;{const e=document.getElementById(c);if(e)e.textContent='🦷 '+curName;});const sp=document.getElementById('curPt');sp.style.display='block';sp.textContent=curName;initTeeth();doneList=[];planList=[];payNote='';try{const snap=await getDoc(doc(db,'patients',id,'data','record'));if(snap.exists()){const d=snap.data();if(d.teeth)Object.assign(teeth,d.teeth);doneList=d.done||[];planList=d.plan||[];payNote=d.payNote||'';}}catch(e){console.error(e);}renderAll();renderDone();renderPlan();calcTotals();document.getElementById('payNote').value=payNote;nav('formula');toast('Открыт: '+curName);};</p>
+<p class="p1">window.openPtModal=id=&gt;{editId=id||null;const p=id?patients.find(x=&gt;x.id===id):null;document.getElementById('ptModalTitle').textContent=p?'Редактировать пациента':'Новый пациент';document.getElementById('m_name').value=p?.name||'';document.getElementById('m_phone').value=p?.phone||'';document.getElementById('m_dob').value=p?.dob||'';document.getElementById('m_allergy').value=p?.allergy||'';document.getElementById('m_note').value=p?.note||'';document.getElementById('ptModal').classList.add('show');setTimeout(()=&gt;document.getElementById('m_name').focus(),100);};</p>
+<p class="p1">window.closePtModal=()=&gt;document.getElementById('ptModal').classList.remove('show');</p>
+<p class="p1">window.savePt=async()=&gt;{const name=document.getElementById('m_name').value.trim();if(!name){alert('Введите ФИО');return;}const data={name,phone:document.getElementById('m_phone').value.trim(),dob:document.getElementById('m_dob').value,allergy:document.getElementById('m_allergy').value.trim(),note:document.getElementById('m_note').value.trim(),updatedAt:serverTimestamp()};try{if(editId)await updateDoc(doc(db,'patients',editId),data);else{data.createdAt=serverTimestamp();await addDoc(collection(db,'patients'),data);}window.closePtModal();await loadPts();toast('Пациент сохранён ✓');}catch(e){alert('Ошибка Firebase. Проверь config.');}};</p>
+<p class="p1">function initTeeth(){teeth={};[...upper,...lower].forEach(n=&gt;{teeth[n]={s:wisdom.has(n)?'W':'H',note:'',surface:'',date:'',photos:[]};});}</p>
+<p class="p1">function buildStatusBar(){const bar=document.getElementById('statusBar');bar.innerHTML='';ST.forEach(s=&gt;{const b=document.createElement('div');b.className='sbtn'+(s.k===curStatus?' sel':'');b.style.cssText=`background:${s.bg};border-color:${s.bc};color:${s.tc}`;b.textContent=s.l;b.onclick=()=&gt;{curStatus=s.k;document.querySelectorAll('.sbtn').forEach(x=&gt;x.classList.remove('sel'));b.classList.add('sel');};bar.appendChild(b);});}</p>
+<p class="p1">function buildLegend(){const l=document.getElementById('legend');l.innerHTML='';ST.filter(s=&gt;s.k!=='H').forEach(s=&gt;{const d=document.createElement('div');d.className='leg';d.innerHTML=`&lt;div class="ld" style="background:${s.bg};border-color:${s.bc}"&gt;&lt;/div&gt;&lt;span&gt;${s.l}&lt;/span&gt;`;l.appendChild(d);});}</p>
+<p class="p1">function renderRow(nums,id){const c=document.getElementById(id);c.innerHTML='';nums.forEach(n=&gt;{const td=teeth[n],s=td.s==='W'?{i:'—',l:''}:(SM[td.s]||SM.H);const el=document.createElement('div');el.className='tooth t-'+td.s;el.innerHTML=`&lt;span class="tn"&gt;${n}&lt;/span&gt;&lt;span class="ti"&gt;${s.i}&lt;/span&gt;&lt;span class="ts"&gt;${s.l}&lt;/span&gt;`;el.onclick=()=&gt;handleTooth(n);c.appendChild(el);});}</p>
+<p class="p1">function renderAll(){renderRow(upper,'upper');renderRow(lower,'lower');}</p>
+<p class="p1">function handleTooth(n){if(teeth[n].s==='W')return;if(curTooth===n){openDet(n);return;}teeth[n].s=curStatus;renderAll();curTooth=n;openDet(n);}</p>
+<p class="p1">function openDet(n){const td=teeth[n],s=SM[td.s]||SM.H;document.getElementById('detNum').textContent='Зуб '+n;const sl=document.getElementById('detSlbl');sl.textContent=s.l;sl.style.color=s.tc;document.getElementById('detSurf').value=td.surface||'';document.getElementById('detNote').value=td.note||'';document.getElementById('detDate').value=td.date||'';const pg=document.getElementById('photosGrid');pg.innerHTML='';(td.photos||[]).forEach(src=&gt;{const img=document.createElement('img');img.src=src;img.className='photo-thumb';pg.appendChild(img);});const p=document.getElementById('detPanel');p.className='det-panel show';p.scrollIntoView({behavior:'smooth',block:'nearest'});}</p>
+<p class="p1">window.closeDet=()=&gt;{document.getElementById('detPanel').className='det-panel';curTooth=null;};</p>
+<p class="p1">window.saveDet=()=&gt;{if(curTooth===null)return;teeth[curTooth].surface=document.getElementById('detSurf').value;teeth[curTooth].note=document.getElementById('detNote').value;teeth[curTooth].date=document.getElementById('detDate').value;window.closeDet();toast('Зуб сохранён');};</p>
+<p class="p1">window.addPhotos=e=&gt;{if(curTooth===null)return;Array.from(e.target.files).forEach(f=&gt;{const r=new FileReader();r.onload=ev=&gt;{teeth[curTooth].photos=teeth[curTooth].photos||[];teeth[curTooth].photos.push(ev.target.result);const img=document.createElement('img');img.src=ev.target.result;img.className='photo-thumb';document.getElementById('photosGrid').appendChild(img);};r.readAsDataURL(f);});e.target.value='';};</p>
+<p class="p1">window.saveFormula=async()=&gt;{if(!curId){toast('Выберите пациента');return;}await saveRec();toast('Формула сохранена ✓');};</p>
+<p class="p1">const fmt=n=&gt;Math.round(n).toLocaleString('ru-RU')+' ₽';</p>
+<p class="p1">function calcTotals(){const d=doneList.reduce((s,x)=&gt;s+(+x.price||0),0),p=planList.reduce((s,x)=&gt;s+(+x.price||0),0);document.getElementById('doneSum').textContent=fmt(d);document.getElementById('planSum').textContent=fmt(p);document.getElementById('tot_d').textContent=fmt(d);document.getElementById('tot_p').textContent=fmt(p);document.getElementById('tot_all').textContent=fmt(d+p);}</p>
+<p class="p1">function renderDone(){document.getElementById('doneTb').innerHTML=doneList.map((t,i)=&gt;`&lt;tr&gt;&lt;td style="color:var(--text2);white-space:nowrap"&gt;${t.date||'—'}&lt;/td&gt;&lt;td&gt;${t.proc}&lt;/td&gt;&lt;td&gt;${t.tooth||'—'}&lt;/td&gt;&lt;td&gt;${t.surface||'—'}&lt;/td&gt;&lt;td style="white-space:nowrap;font-weight:700"&gt;${fmt(t.price||0)}&lt;/td&gt;&lt;td&gt;&lt;button class="del" onclick="delDone(${i})"&gt;×&lt;/button&gt;&lt;/td&gt;&lt;/tr&gt;`).join('');calcTotals();}</p>
+<p class="p1">function renderPlan(){document.getElementById('planTb').innerHTML=planList.map((t,i)=&gt;`&lt;tr&gt;&lt;td&gt;&lt;span class="badge badge-warn"&gt;Ожидает&lt;/span&gt;&lt;/td&gt;&lt;td&gt;${t.proc}&lt;/td&gt;&lt;td&gt;${t.tooth||'—'}&lt;/td&gt;&lt;td&gt;${t.surface||'—'}&lt;/td&gt;&lt;td style="white-space:nowrap;font-weight:700"&gt;~${fmt(t.price||0)}&lt;/td&gt;&lt;td&gt;&lt;button class="del" onclick="delPlan(${i})"&gt;×&lt;/button&gt;&lt;/td&gt;&lt;/tr&gt;`).join('');calcTotals();}</p>
+<p class="p1">window.addDone=()=&gt;{const proc=document.getElementById('d_proc').value.trim();if(!proc)return;doneList.push({date:new Date().toLocaleDateString('ru-RU'),proc,tooth:document.getElementById('d_tooth').value.trim(),surface:document.getElementById('d_surf').value.trim(),price:+document.getElementById('d_price').value||0});['d_proc','d_tooth','d_surf','d_price'].forEach(id=&gt;document.getElementById(id).value='');renderDone();};</p>
+<p class="p1">window.addPlan=()=&gt;{const proc=document.getElementById('p_proc').value.trim();if(!proc)return;planList.push({proc,tooth:document.getElementById('p_tooth').value.trim(),surface:document.getElementById('p_surf').value.trim(),price:+document.getElementById('p_price').value||0});['p_proc','p_tooth','p_surf','p_price'].forEach(id=&gt;document.getElementById(id).value='');renderPlan();};</p>
+<p class="p1">window.delDone=i=&gt;{doneList.splice(i,1);renderDone();};</p>
+<p class="p1">window.delPlan=i=&gt;{planList.splice(i,1);renderPlan();};</p>
+<p class="p1">window.saveTreat=async()=&gt;{if(!curId){toast('Выберите пациента');return;}payNote=document.getElementById('payNote').value;await saveRec();toast('Сохранено ✓');};</p>
+<p class="p1">async function saveRec(){await setDoc(doc(db,'patients',curId,'data','record'),{teeth:JSON.parse(JSON.stringify(teeth)),done:doneList,plan:planList,payNote,updatedAt:serverTimestamp()},{merge:true});}</p>
+<p class="p1">function defaultPrice(){return[{cat:'Диагностика',items:[{name:'Первичный осмотр + план лечения',price:''},{name:'Прицельный снимок (1 зуб)',price:''},{name:'Панорамный снимок (ОПТГ)',price:''}]},{cat:'Профилактика',items:[{name:'Профессиональная гигиена (AirFlow)',price:''},{name:'Покрытие фтором',price:''}]},{cat:'Терапия',items:[{name:'Лечение кариеса, 1 поверхность',price:''},{name:'Лечение кариеса, 2 поверхности',price:''},{name:'Лечение кариеса, 3+ поверхности',price:''},{name:'Пломба фотополимерная',price:''},{name:'Временная пломба',price:''}]},{cat:'Эндодонтия',items:[{name:'Лечение пульпита, 1 канал',price:''},{name:'Лечение пульпита, 2 канала',price:''},{name:'Лечение пульпита, 3+ канала',price:''},{name:'Лечение периодонтита, 1 канал',price:''},{name:'Лечение периодонтита, 2 канала',price:''},{name:'Лечение периодонтита, 3+ канала',price:''},{name:'Повторное лечение канала',price:''}]},{cat:'Хирургия',items:[{name:'Удаление зуба (простое)',price:''},{name:'Удаление зуба (сложное / зуб мудрости)',price:''},{name:'Разрез, дренаж',price:''}]},{cat:'Протезирование',items:[{name:'Коронка металлокерамика',price:''},{name:'Коронка диоксид циркония',price:''},{name:'Временная коронка',price:''}]},{cat:'Имплантация',items:[{name:'Имплант (под ключ)',price:''},{name:'Консультация имплантолога',price:''}]},{cat:'Эстетика',items:[{name:'Виниры (1 зуб)',price:''},{name:'Профессиональное отбеливание',price:''}]},{cat:'Ортодонтия',items:[{name:'Капа от бруксизма',price:''},{name:'Консультация ортодонта',price:''}]}];}</p>
+<p class="p1">async function loadPrice(){try{const s=await getDoc(doc(db,'clinic','pricelist'));if(s.exists()&amp;&amp;s.data().data)priceData=s.data().data;}catch(e){}renderPrice();}</p>
+<p class="p1">function renderPrice(filter){const list=document.getElementById('priceList');list.innerHTML='';priceData.forEach((cat,ci)=&gt;{const items=filter?cat.items.filter(i=&gt;i.name.toLowerCase().includes(filter)):cat.items;if(!items.length&amp;&amp;filter)return;const div=document.createElement('div');const hdr=document.createElement('div');hdr.className='pcat';hdr.contentEditable=true;hdr.textContent=cat.cat;hdr.onblur=()=&gt;priceData[ci].cat=hdr.textContent.trim();div.appendChild(hdr);items.forEach(item=&gt;{const ii=cat.items.indexOf(item);const row=document.createElement('div');row.className='prow';const nm=document.createElement('div');nm.className='pname';nm.contentEditable=true;nm.textContent=item.name;nm.onblur=()=&gt;priceData[ci].items[ii].name=nm.textContent.trim();const vl=document.createElement('div');vl.className='pval'+(item.price?'':' empty');vl.contentEditable=true;vl.textContent=item.price?item.price+' ₽':'— введите цену';vl.onfocus=function(){if(!priceData[ci].items[ii].price)this.textContent='';this.classList.remove('empty');};vl.onblur=function(){const raw=this.textContent.replace(/[^\d]/g,'');priceData[ci].items[ii].price=raw;this.textContent=raw?raw+' ₽':'— введите цену';if(!raw)this.classList.add('empty');};const dl=document.createElement('button');dl.className='del';dl.textContent='×';dl.onclick=()=&gt;{priceData[ci].items.splice(ii,1);renderPrice();};row.appendChild(nm);row.appendChild(vl);row.appendChild(dl);div.appendChild(row);});list.appendChild(div);});}</p>
+<p class="p1">window.filterPrice=()=&gt;renderPrice(document.getElementById('priceQ').value.toLowerCase()||undefined);</p>
+<p class="p1">window.addCat=()=&gt;{const n=prompt('Название новой категории:');if(n){priceData.push({cat:n,items:[]});renderPrice();}};</p>
+<p class="p1">window.addPriceItem=()=&gt;{const names=priceData.map((c,i)=&gt;`${i}: ${c.cat}`).join('\n');const ci=parseInt(prompt('В какую категорию добавить?\n\n'+names+'\n\nВведите номер:'));if(!isNaN(ci)&amp;&amp;priceData[ci]){priceData[ci].items.push({name:'Новая услуга',price:''});renderPrice();toast('Услуга добавлена');}};</p>
+<p class="p1">window.savePriceList=async()=&gt;{try{await setDoc(doc(db,'clinic','pricelist'),{data:priceData,updatedAt:serverTimestamp()});toast('Прайс сохранён ✓');}catch(e){toast('Ошибка сохранения');}};</p>
+<p class="p1">window.openPriceModal=t=&gt;{modalTarget=t;document.getElementById('modalQ').value='';renderModal();document.getElementById('priceModal').classList.add('show');};</p>
+<p class="p1">window.closePriceModal=()=&gt;document.getElementById('priceModal').classList.remove('show');</p>
+<p class="p1">window.renderModal=()=&gt;{const q=document.getElementById('modalQ').value.toLowerCase(),list=document.getElementById('modalList');list.innerHTML='';priceData.forEach(cat=&gt;cat.items.filter(i=&gt;!q||i.name.toLowerCase().includes(q)).forEach(item=&gt;{const row=document.createElement('div');row.className='price-pick-item';row.innerHTML=`&lt;div class="ppi-name"&gt;${item.name}&lt;/div&gt;&lt;div class="ppi-meta"&gt;${item.price?item.price+' ₽':'цена не задана'} · ${cat.cat}&lt;/div&gt;`;row.onclick=()=&gt;{const p=modalTarget==='done'?'d':'p';document.getElementById(p+'_proc').value=item.name;document.getElementById(p+'_price').value=item.price||'';window.closePriceModal();nav(modalTarget);};list.appendChild(row);}));if(!list.children.length)list.innerHTML='&lt;div style="padding:20px;text-align:center;color:var(--text2)"&gt;Ничего не найдено&lt;/div&gt;';};</p>
+<p class="p1">function buildCalHdr(){const h=document.getElementById('calHdr');h.innerHTML='';['Пн','Вт','Ср','Чт','Пт','Сб','Вс'].forEach(d=&gt;{const e=document.createElement('div');e.className='cal-dn';e.textContent=d;h.appendChild(e);});}</p>
+<p class="p1">function renderCal(){const months=['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];document.getElementById('schedTitle').textContent=`${months[schedM]} ${schedY}`;const key=`${schedY}-${String(schedM+1).padStart(2,'0')}`;if(!schedData[key])schedData[key]=new Set();const work=schedData[key],grid=document.getElementById('calGrid');grid.innerHTML='';const first=new Date(schedY,schedM,1).getDay();for(let i=0;i&lt;(first===0?6:first-1);i++)grid.appendChild(document.createElement('div'));const days=new Date(schedY,schedM+1,0).getDate(),today=new Date();for(let d=1;d&lt;=days;d++){const dow=new Date(schedY,schedM,d).getDay(),isToday=today.getFullYear()===schedY&amp;&amp;today.getMonth()===schedM&amp;&amp;today.getDate()===d,el=document.createElement('div');el.className='cal-day'+(work.has(d)?' work':'')+(dow===0||dow===6?' off':'')+(isToday?' today':'');el.textContent=d;el.onclick=()=&gt;{work.has(d)?work.delete(d):work.add(d);renderCal();};grid.appendChild(el);}}</p>
+<p class="p1">window.schedPrev=()=&gt;{if(--schedM&lt;0){schedM=11;schedY--;}renderCal();};</p>
+<p class="p1">window.schedNext=()=&gt;{if(++schedM&gt;11){schedM=0;schedY++;}renderCal();};</p>
+<p class="p1">window.saveSchedule=async()=&gt;{try{const key=`${schedY}-${String(schedM+1).padStart(2,'0')}`;await setDoc(doc(db,'clinic','schedule_'+key),{days:[...schedData[key]||[]],updatedAt:serverTimestamp()});toast('График сохранён ✓');}catch(e){toast('Ошибка');}};</p>
+<p class="p1">&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
