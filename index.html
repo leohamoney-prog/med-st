@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
+<title>med_st</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦷</text></svg>"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg:#f7f6f3;--bg2:#fff;--bg3:#f0efe9;
+  --text:#1a1a18;--text2:#6b6b67;--text3:#a0a09c;
+  --border:#e0dfd8;--border2:#ccc;
+  --blue-bg:#E6F1FB;--blue:#0C447C;--blue-bd:#B5D4F4;
+  --green-bg:#E1F5EE;--green:#085041;--green-bd:#5DCAA5;
+  --nav:56px;--side:210px;--r:8px;--rl:12px;
+}
+html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);font-size:15px;line-height:1.5}
+input,textarea,select,button{font-family:inherit;font-size:14px}
+
+/* LOGIN */
+.login-screen{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:1000}
+.lcard{background:var(--bg2);border:.5px solid var(--border);border-radius:var(--rl);padding:36px 32px;width:min(360px,90vw);text-align:center}
+.llogo{font-size:42px;margin-bottom:8px}
+.ltitle{font-size:22px;font-weight:700;color:var(--text)}
+.lsub{font-size:13px;color:var(--text2);margin-bottom:22px}
+.lerr{background:#FCEBEB;color:#A32D2D;border-radius:var(--r);padding:8px 12px;font-size:13px;margin-bottom:12px;display:none}
+.linput{width:100%;padding:11px 14px;border:.5px solid var(--border2);border-radius:var(--r);font-size:15px;margin-bottom:12px;background:var(--bg2);color:var(--text);outline:none}
+.linput:focus{border-color:var(--blue)}
+.lbtn{width:100%;padding:12px;background:var(--blue-bg);color:var(--blue);border:.5px solid var(--blue-bd);border-radius:var(--r);font-size:15px;font-weight:600;cursor:pointer}
+.lbtn:hover{opacity:.85}
+
+/* APP SHELL */
+.app{display:flex;min-height:100vh}
+.sidebar{width:var(--side);flex-shrink:0;background:var(--bg2);border-right:.5px solid var(--border);position:fixed;top:0;left:0;bottom:0;z-index:50;display:flex;flex-direction:column;overflow-y:auto}
+.logo{padding:15px 16px;border-bottom:.5px solid var(--border)}
+.logo-name{font-size:16px;font-weight:700;color:var(--text)}
+.logo-sub{font-size:11px;color:var(--text2);margin-top:1px}
+.snav{flex:1;padding:6px 0}
+.ngl{font-size:10px;color:var(--text3);letter-spacing:.07em;padding:12px 16px 3px;text-transform:uppercase}
+.ni{display:flex;align-items:center;gap:9px;padding:10px 16px;font-size:13px;cursor:pointer;color:var(--text2);border-left:2.5px solid transparent;transition:background .1s}
+.ni:hover{background:var(--bg3);color:var(--text)}
+.ni.on{color:var(--blue);border-left-color:var(--blue);background:var(--blue-bg);font-weight:600}
+.nicon{font-size:15px;width:20px;text-align:center}
+.sfooter{padding:12px 16px;border-top:.5px solid var(--border)}
+.cur-pt{font-size:12px;color:var(--blue);background:var(--blue-bg);border-radius:var(--r);padding:6px 10px;margin-bottom:8px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:none}
+.logout{width:100%;padding:8px;background:transparent;border:.5px solid var(--border2);border-radius:var(--r);font-size:13px;color:var(--text2);cursor:pointer}
+.logout:hover{background:var(--bg3)}
+
+/* BOTTOM NAV */
+.bnav{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:.5px solid var(--border);z-index:50;height:var(--nav)}
+.bni{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:10px;color:var(--text2);border:none;background:transparent;cursor:pointer;padding:4px 0}
+.bni span:first-child{font-size:20px;line-height:1}
+.bni.on{color:var(--blue)}
+
+/* MAIN */
+.main{flex:1;margin-left:var(--side);padding:22px 24px;min-width:0}
+.sec{display:none}.sec.on{display:block}
+
+/* TOPBAR */
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;gap:12px;flex-wrap:wrap}
+.topbar h2{font-size:18px;font-weight:700;color:var(--text)}
+.pt-chip{font-size:12px;color:var(--blue);background:var(--blue-bg);border:.5px solid var(--blue-bd);border-radius:20px;padding:5px 12px;max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* BUTTONS */
+.btn{padding:8px 16px;border-radius:var(--r);border:.5px solid var(--border2);background:var(--bg2);cursor:pointer;font-size:13px;color:var(--text);font-weight:500}
+.btn:hover{background:var(--bg3)}.btn:active{opacity:.7}
+.btn.pri{background:var(--blue-bg);color:var(--blue);border-color:var(--blue-bd)}
+.btn.sm{padding:6px 12px;font-size:12px}
+.btn.danger{background:#FCEBEB;color:#791F1F;border-color:#F09595}
+
+/* CARDS */
+.card{background:var(--bg2);border:.5px solid var(--border);border-radius:var(--rl);padding:18px;margin-bottom:14px}
+.card-sub{font-size:12px;color:var(--text2);margin-bottom:14px}
+.card-actions{margin-top:16px;padding-top:14px;border-top:.5px solid var(--border);display:flex;gap:8px}
+
+/* FORMS */
+.field{display:flex;flex-direction:column;gap:4px;margin-bottom:10px}
+.field.m0{margin-bottom:0}
+.field label{font-size:10px;font-weight:700;color:var(--text3);letter-spacing:.05em}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+input[type=text],input[type=number],input[type=date],input[type=password],textarea,select{
+  padding:8px 11px;border:.5px solid var(--border2);border-radius:var(--r);
+  background:var(--bg2);font-size:14px;color:var(--text);width:100%;outline:none}
+input:focus,textarea:focus,select:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(12,68,124,.08)}
+textarea{resize:none;font-family:inherit}
+.search-inp{width:100%;margin-bottom:16px;padding:10px 14px;border:.5px solid var(--border2);border-radius:var(--rl);font-size:14px;background:var(--bg2);color:var(--text);outline:none}
+.search-inp:focus{border-color:var(--blue)}
+
+/* PATIENTS */
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;margin-bottom:18px}
+.stat{background:var(--bg2);border:.5px solid var(--border);border-radius:var(--r);padding:12px;text-align:center}
+.stat-val{font-size:22px;font-weight:700;color:var(--text)}
+.stat-lbl{font-size:11px;color:var(--text2);margin-top:2px}
+.pt-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px}
+.pt-card{background:var(--bg2);border:.5px solid var(--border);border-radius:var(--rl);padding:16px;cursor:pointer;transition:border-color .15s,box-shadow .15s}
+.pt-card:hover{border-color:var(--blue-bd);box-shadow:0 2px 10px rgba(0,0,0,.07)}
+.pt-hdr{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.avatar{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;background:var(--blue-bg);color:var(--blue)}
+.pt-name{font-size:14px;font-weight:600;color:var(--text)}
+.pt-phone{font-size:12px;color:var(--text2);margin-top:1px}
+.pt-note{font-size:12px;color:var(--text2);line-height:1.5;padding-top:8px;border-top:.5px solid var(--border);margin-top:8px}
+.pt-tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px}
+.tag{font-size:11px;padding:3px 8px;border-radius:20px;font-weight:500}
+.tag-al{background:#FCEBEB;color:#A32D2D}
+.empty{text-align:center;padding:48px 16px;color:var(--text2);font-size:14px}
+
+/* TEETH */
+.status-bar{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:14px}
+.sbtn{padding:6px 12px;border-radius:20px;border:1.5px solid;font-size:12px;font-weight:600;cursor:pointer}
+.sbtn.sel{box-shadow:0 0 0 2.5px var(--text)}
+.jaw-lbl{font-size:10px;color:var(--text2);margin-bottom:5px;letter-spacing:.03em;font-weight:500}
+.teeth-row{display:grid;grid-template-columns:repeat(16,1fr);gap:2px}
+.tooth{border-radius:5px;border:1px solid var(--border);cursor:pointer;text-align:center;padding:5px 1px;transition:transform .1s}
+.tooth:active{transform:scale(.93)}
+.tn{font-size:8px;color:var(--text2);display:block;line-height:1}
+.ti{font-size:12px;display:block;line-height:1.6}
+.ts{font-size:7px;display:block;line-height:1.3;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.jaw-gap{height:5px}
+.t-H{background:#fff}.t-H .ts{color:#ccc}
+.t-C{background:#FCEBEB;border-color:#F09595}.t-C .tn,.t-C .ts{color:#A32D2D}
+.t-F{background:#E1F5EE;border-color:#5DCAA5}.t-F .tn,.t-F .ts{color:#0F6E56}
+.t-P{background:#FAEEDA;border-color:#EF9F27}.t-P .tn,.t-P .ts{color:#854F0B}
+.t-R{background:#EEEDFE;border-color:#AFA9EC}.t-R .tn,.t-R .ts{color:#534AB7}
+.t-K{background:#E6F1FB;border-color:#85B7EB}.t-K .tn,.t-K .ts{color:#185FA5}
+.t-I{background:#FBEAF0;border-color:#ED93B1}.t-I .tn,.t-I .ts{color:#993556}
+.t-M{background:#F1EFE8;border-color:#B4B2A9}.t-M .tn,.t-M .ts{color:#5F5E5A}
+.t-PL{background:#EAF3DE;border-color:#97C459}.t-PL .tn,.t-PL .ts{color:#3B6D11}
+.t-W{background:#f0f0f0;opacity:.5}
+.leg-row{display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:12px;padding-top:12px;border-top:.5px solid var(--border)}
+.leg{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text2)}
+.ld{width:12px;height:12px;border-radius:3px;border:1px solid;flex-shrink:0}
+
+/* TOOTH DETAIL */
+.det-panel{margin-top:14px;background:var(--bg3);border-radius:var(--r);padding:14px;display:none}
+.det-panel.show{display:block}
+.det-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.det-num{font-size:16px;font-weight:700;color:var(--text)}
+.det-slbl{font-size:12px;font-weight:600;margin-top:2px}
+.det-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.photo-zone{border:1.5px dashed var(--border2);border-radius:var(--r);padding:16px;text-align:center;cursor:pointer;margin-top:10px}
+.photo-zone:hover{background:var(--bg3)}
+.photo-zone p{font-size:12px;color:var(--text2);margin-top:4px}
+.photos-grid{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.photo-thumb{width:64px;height:64px;object-fit:cover;border-radius:var(--r);border:.5px solid var(--border);cursor:pointer;transition:transform .15s,box-shadow .15s}
+.photo-thumb:hover{transform:scale(1.08);box-shadow:0 4px 16px rgba(0,0,0,.18)}
+.lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:900;align-items:center;justify-content:center;flex-direction:column}
+.lightbox.show{display:flex}
+.lightbox img{max-width:calc(100vw - 32px);max-height:calc(100vh - 120px);border-radius:var(--r);object-fit:contain}
+.lb-close{position:fixed;top:16px;right:16px;color:#fff;font-size:24px;cursor:pointer;background:rgba(255,255,255,.15);border:none;border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center}
+.lb-close:hover{background:rgba(255,255,255,.3)}
+.lb-nav{display:flex;gap:12px;margin-top:14px;align-items:center}
+.lb-btn{color:#fff;background:rgba(255,255,255,.15);border:none;border-radius:var(--r);padding:8px 18px;cursor:pointer;font-size:14px}
+.lb-btn:hover{background:rgba(255,255,255,.3)}
+.lb-counter{color:rgba(255,255,255,.6);font-size:12px}
+.lb-del{color:#ff6b6b;background:rgba(255,80,80,.15);border:none;border-radius:var(--r);padding:8px 14px;cursor:pointer;font-size:13px}
+.lb-del:hover{background:rgba(255,80,80,.3)}
+.file-zone{border:1.5px dashed var(--border2);border-radius:var(--r);padding:24px;text-align:center;cursor:pointer}
+.file-zone:hover,.file-zone.drag{background:var(--blue-bg);border-color:var(--blue-bd)}
+.file-item{display:grid;grid-template-columns:36px 1fr auto;align-items:center;gap:10px;padding:10px 12px;border-bottom:.5px solid var(--border)}
+.file-item:last-child{border-bottom:none}
+.file-icon{font-size:22px;text-align:center}
+.file-name{font-size:13px;font-weight:500;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.file-meta{font-size:11px;color:var(--text2);margin-top:2px}
+.storage-bar{height:6px;border-radius:3px;background:var(--bg3);overflow:hidden;margin:6px 0 2px}
+.storage-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,#5DCAA5,#0C447C);transition:width .4s}
+
+/* TABLES */
+.twrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;font-size:13px;min-width:480px}
+th{text-align:left;font-size:11px;font-weight:700;color:var(--text2);padding:8px 10px;border-bottom:.5px solid var(--border);white-space:nowrap;letter-spacing:.03em}
+td{padding:9px 10px;border-bottom:.5px solid var(--border);color:var(--text);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--bg3)}
+.sum-line{display:flex;justify-content:flex-end;padding-top:10px;font-size:13px;font-weight:700;gap:8px}
+.c-green{color:#0F6E56}.c-orange{color:#854F0B}
+.muted{color:var(--text2)}.fw{font-weight:700}
+
+/* ADD FORM */
+.add-form{margin-bottom:16px;padding-bottom:16px;border-bottom:.5px solid var(--border)}
+.arow{display:grid;gap:8px;margin-bottom:10px}
+.form-btns{display:flex;gap:8px;flex-wrap:wrap}
+.del{padding:5px 9px;border-radius:var(--r);border:.5px solid var(--border);background:transparent;cursor:pointer;font-size:12px;color:var(--text2)}
+.del:hover{background:#FCEBEB;color:#791F1F;border-color:#F09595}
+
+/* TOTAL */
+.tot-card{background:var(--bg3);border-radius:var(--r);padding:14px;margin-bottom:14px}
+.tot-row{display:flex;justify-content:space-between;align-items:center;font-size:14px;padding:6px 0;border-bottom:.5px solid var(--border)}
+.tot-row:last-child{border:none;padding-top:12px;font-size:16px;font-weight:700}
+
+/* SCHEDULE */
+.month-title{font-size:14px;font-weight:700;color:var(--text);min-width:140px;text-align:center}
+.cal-header{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-bottom:3px}
+.cal-dn{text-align:center;font-size:11px;color:var(--text2);padding:4px}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+.cal-day{text-align:center;padding:9px 4px;border-radius:var(--r);font-size:13px;cursor:pointer;border:.5px solid transparent;color:var(--text2);position:relative}
+.cal-day:hover{background:var(--bg3)}
+.cal-day.work{background:#E1F5EE;color:#085041;border-color:#5DCAA5;font-weight:700}
+.cal-day.today{border-color:var(--blue)!important}
+.cal-day.off{opacity:.35}
+.cal-day.has-apts::after{content:'';position:absolute;bottom:3px;left:50%;transform:translateX(-50%);width:5px;height:5px;border-radius:50%;background:#0C447C}
+.cal-day.work.has-apts::after{background:#085041}
+.day-panel{margin-top:16px;background:var(--bg3);border-radius:var(--rl);padding:16px;display:none}
+.day-panel.show{display:block}
+.day-panel-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.day-panel-title{font-size:15px;font-weight:700;color:var(--text)}
+.apt-list{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
+.apt-item{display:grid;grid-template-columns:70px 1fr auto;align-items:center;gap:10px;background:var(--bg2);border:.5px solid var(--border);border-radius:var(--r);padding:10px 12px}
+.apt-time{font-size:13px;font-weight:700;color:var(--blue)}
+.apt-name{font-size:13px;color:var(--text)}
+.apt-note{font-size:11px;color:var(--text2);margin-top:2px}
+.apt-add{display:grid;grid-template-columns:90px 1fr 1fr auto;gap:8px;align-items:end}
+@media(max-width:680px){.apt-add{grid-template-columns:1fr 1fr;}.apt-add .apt-add-time{grid-column:1}.apt-add .apt-add-name{grid-column:2}.apt-add .apt-add-note{grid-column:1/3}.apt-add .apt-add-btn{grid-column:1/3}}
+
+/* PRICE LIST */
+.pcat{font-size:11px;font-weight:700;color:var(--text2);padding:10px 8px 5px;border-bottom:.5px solid var(--border);letter-spacing:.06em;text-transform:uppercase;outline:none;cursor:text}
+.pcat:focus{background:var(--blue-bg);color:var(--blue)}
+.prow{display:grid;grid-template-columns:1fr 130px 36px;align-items:center;gap:8px;padding:9px 8px;border-bottom:.5px solid var(--border)}
+.prow:last-child{border-bottom:none}
+.pname{font-size:13px;color:var(--text);outline:none;cursor:text;border-radius:4px;padding:1px 4px}
+.pname:focus{background:var(--blue-bg)}
+.pval{font-size:13px;font-weight:700;color:var(--text);outline:none;cursor:text;text-align:right;border-radius:4px;padding:1px 4px}
+.pval:focus{background:var(--blue-bg)}
+.pval.empty{color:var(--text3)}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;align-items:center;justify-content:center;padding:16px}
+.modal-overlay.show{display:flex}
+.modal{background:var(--bg2);border-radius:var(--rl);width:min(480px,100%);max-height:90vh;display:flex;flex-direction:column;overflow:hidden}
+.mhdr{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:.5px solid var(--border);flex-shrink:0}
+.mtitle{font-size:16px;font-weight:700;color:var(--text)}
+.mclose{background:transparent;border:none;font-size:20px;cursor:pointer;color:var(--text2);padding:2px 6px;line-height:1}
+.mclose:hover{color:var(--text)}
+.mbody{padding:20px;overflow-y:auto;flex:1}
+.mfooter{padding:14px 20px;border-top:.5px solid var(--border);display:flex;justify-content:flex-end;gap:8px;flex-shrink:0}
+.price-pick-item{padding:10px 8px;border-bottom:.5px solid var(--border);cursor:pointer;border-radius:var(--r)}
+.price-pick-item:hover{background:var(--blue-bg)}
+.price-pick-item:last-child{border-bottom:none}
+.ppi-name{font-size:13px;color:var(--text);font-weight:500}
+.ppi-meta{font-size:11px;color:var(--text2);margin-top:2px}
+
+/* BADGE */
+.badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600}
+.badge-warn{background:#FBEAF0;color:#993556}
+
+/* TOAST */
+.toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(20px);background:#1a1a18;color:#fff;padding:10px 20px;border-radius:20px;font-size:13px;opacity:0;transition:opacity .25s,transform .25s;pointer-events:none;z-index:999;white-space:nowrap}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* RESPONSIVE */
+@media(max-width:680px){
+  .sidebar{display:none}.bnav{display:flex}
+  .main{margin-left:0;padding:14px 12px;padding-bottom:calc(var(--nav) + 14px)}
+  .teeth-row{gap:1px}.tooth{padding:3px 0}.ti{font-size:10px}.ts{font-size:6px}
+  .det-grid{grid-template-columns:1fr}.arow{grid-template-columns:1fr!important}
+  .frow{grid-template-columns:1fr}
+  .stats-row{grid-template-columns:repeat(2,1fr)}
+  .topbar h2{font-size:16px}
+  .toast{bottom:calc(var(--nav) + 10px)}
+  .prow{grid-template-columns:1fr 90px 32px}
+}
+@media(min-width:681px){.arow.r4{grid-template-columns:2fr 1fr 1fr 100px}}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="loginScreen" class="login-screen">
+  <div class="lcard">
+    <div class="llogo">🦷</div>
+    <div class="ltitle">med_st</div>
+    <div class="lsub">Стоматологическая база</div>
+    <div id="loginErr" class="lerr">Неверный пароль</div>
+    <input type="password" id="loginPass" class="linput" placeholder="Введите пароль" onkeydown="if(event.key==='Enter')doLogin()"/>
+    <button class="lbtn" onclick="doLogin()">Войти</button>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app" class="app" style="display:none">
+  <aside class="sidebar">
+    <div class="logo"><div class="logo-name">🦷 med_st</div><div class="logo-sub">Стоматологическая база</div></div>
+    <nav class="snav">
+      <div class="ngl">Пациенты</div>
+      <div class="ni on" data-s="patients" onclick="nav('patients',this)"><span class="nicon">👥</span>База пациентов</div>
+      <div class="ngl">Карточка пациента</div>
+      <div class="ni" data-s="formula" onclick="nav('formula',this)"><span class="nicon">🦷</span>Зубная формула</div>
+      <div class="ni" data-s="done" onclick="nav('done',this)"><span class="nicon">✅</span>Выполнено</div>
+      <div class="ni" data-s="plan" onclick="nav('plan',this)"><span class="nicon">📋</span>План лечения</div>
+      <div class="ni" data-s="total" onclick="nav('total',this)"><span class="nicon">📊</span>Итог</div>
+      <div class="ngl">Клиника</div>
+      <div class="ni" data-s="schedule" onclick="nav('schedule',this)"><span class="nicon">📅</span>Расписание</div>
+      <div class="ni" data-s="price" onclick="nav('price',this)"><span class="nicon">💰</span>Прайс-лист</div>
+      <div class="ni" data-s="files" onclick="nav('files',this)"><span class="nicon">🗂</span>Файлы и снимки</div>
+    </nav>
+    <div class="sfooter">
+      <div id="curPt" class="cur-pt"></div>
+      <button class="logout" onclick="doLogout()">Выйти</button>
+    </div>
+  </aside>
+  <nav class="bnav">
+    <button class="bni on" data-s="patients" onclick="nav('patients',this)"><span>👥</span><span>Пациенты</span></button>
+    <button class="bni" data-s="formula" onclick="nav('formula',this)"><span>🦷</span><span>Формула</span></button>
+    <button class="bni" data-s="done" onclick="nav('done',this)"><span>✅</span><span>Сделано</span></button>
+    <button class="bni" data-s="plan" onclick="nav('plan',this)"><span>📋</span><span>План</span></button>
+    <button class="bni" data-s="price" onclick="nav('price',this)"><span>💰</span><span>Прайс</span></button>
+  </nav>
+  <main class="main">
+
+    <!-- PATIENTS -->
+    <section class="sec on" id="s-patients">
+      <div class="topbar"><h2>База пациентов</h2><button class="btn pri" onclick="openPtModal()">+ Новый пациент</button></div>
+      <input class="search-inp" id="ptSearch" placeholder="🔍 Поиск по имени или телефону..." oninput="renderPts()"/>
+      <div class="stats-row" id="statsRow"></div>
+      <div class="pt-grid" id="ptGrid"><div class="empty">Загрузка...</div></div>
+    </section>
+
+    <!-- FORMULA -->
+    <section class="sec" id="s-formula">
+      <div class="topbar"><h2>Зубная формула</h2><div class="pt-chip" id="chipFormula">Пациент не выбран</div></div>
+      <div class="card">
+        <div class="card-sub">Выберите статус → нажмите на зуб. Повторное нажатие — карточка зуба.</div>
+        <div class="status-bar" id="statusBar"></div>
+        <div class="jaw-lbl">Верхняя челюсть (18 → 28)</div>
+        <div class="teeth-row" id="upper"></div>
+        <div class="jaw-gap"></div>
+        <div class="teeth-row" id="lower"></div>
+        <div class="jaw-lbl" style="margin-top:4px">Нижняя челюсть (48 → 38)</div>
+        <div class="leg-row" id="legend"></div>
+        <div class="det-panel" id="detPanel">
+          <div class="det-hdr">
+            <div><div class="det-num" id="detNum">Зуб —</div><div class="det-slbl" id="detSlbl"></div></div>
+            <div style="display:flex;gap:6px">
+              <button class="btn sm pri" onclick="saveDet()">Сохранить</button>
+              <button class="btn sm" onclick="closeDet()">✕</button>
+            </div>
+          </div>
+          <div class="det-grid">
+            <div class="field"><label>ПОВЕРХНОСТИ</label><textarea id="detSurf" rows="2" placeholder="Мезиальная, дистальная, окклюзионная..."></textarea></div>
+            <div class="field"><label>ЗАМЕТКА ВРАЧА</label><textarea id="detNote" rows="2" placeholder="Симптомы, рекомендации..."></textarea></div>
+          </div>
+          <div class="field"><label>ДАТА ВМЕШАТЕЛЬСТВА</label><input type="date" id="detDate" style="max-width:180px"/></div>
+          <div class="photo-zone" onclick="document.getElementById('photoIn').click()">
+            <div style="font-size:24px">📷</div><p>Нажмите для добавления фото зуба</p>
+            <input type="file" id="photoIn" accept="image/*" multiple style="display:none" onchange="addPhotos(event)"/>
+          </div>
+          <div class="photos-grid" id="photosGrid"></div>
+        </div>
+        <div class="card-actions"><button class="btn pri" onclick="saveFormula()">💾 Сохранить формулу</button></div>
+      </div>
+    </section>
+
+    <!-- DONE -->
+    <section class="sec" id="s-done">
+      <div class="topbar"><h2>Выполненные манипуляции</h2><div class="pt-chip" id="chipDone">Пациент не выбран</div></div>
+      <div class="card">
+        <div class="add-form">
+          <div class="arow r4">
+            <div class="field m0"><label>МАНИПУЛЯЦИЯ</label><input type="text" id="d_proc" placeholder="Название..."/></div>
+            <div class="field m0"><label>ЗУБ</label><input type="text" id="d_tooth" placeholder="16"/></div>
+            <div class="field m0"><label>ПОВЕРХНОСТЬ</label><input type="text" id="d_surf" placeholder="Мез, Дист..."/></div>
+            <div class="field m0"><label>ЦЕНА ₽</label><input type="number" id="d_price" placeholder="0"/></div>
+          </div>
+          <div class="form-btns">
+            <button class="btn pri" onclick="addDone()">+ Добавить</button>
+            <button class="btn sm" onclick="openPriceModal('done')">Из прайса</button>
+          </div>
+        </div>
+        <div class="twrap"><table><thead><tr><th>Дата</th><th>Манипуляция</th><th>Зуб</th><th>Поверхность</th><th>Сумма</th><th></th></tr></thead><tbody id="doneTb"></tbody></table></div>
+        <div class="sum-line">Итого: <span id="doneSum" class="c-green">0 ₽</span></div>
+        <div class="card-actions"><button class="btn pri" onclick="saveTreat()">💾 Сохранить</button></div>
+      </div>
+    </section>
+
+    <!-- PLAN -->
+    <section class="sec" id="s-plan">
+      <div class="topbar"><h2>План лечения</h2><div class="pt-chip" id="chipPlan">Пациент не выбран</div></div>
+      <div class="card">
+        <div class="add-form">
+          <div class="arow r4">
+            <div class="field m0"><label>МАНИПУЛЯЦИЯ</label><input type="text" id="p_proc" placeholder="Название..."/></div>
+            <div class="field m0"><label>ЗУБ</label><input type="text" id="p_tooth" placeholder="36"/></div>
+            <div class="field m0"><label>ПОВЕРХНОСТЬ</label><input type="text" id="p_surf" placeholder="Мез, Дист..."/></div>
+            <div class="field m0"><label>ЦЕНА ₽</label><input type="number" id="p_price" placeholder="0"/></div>
+          </div>
+          <div class="form-btns">
+            <button class="btn pri" onclick="addPlan()">+ Добавить</button>
+            <button class="btn sm" onclick="openPriceModal('plan')">Из прайса</button>
+          </div>
+        </div>
+        <div class="twrap"><table><thead><tr><th>Приоритет</th><th>Манипуляция</th><th>Зуб</th><th>Поверхность</th><th>Ориент. стоим.</th><th></th></tr></thead><tbody id="planTb"></tbody></table></div>
+        <div class="sum-line">Ориент.: <span id="planSum" class="c-orange">0 ₽</span></div>
+        <div class="card-actions"><button class="btn pri" onclick="saveTreat()">💾 Сохранить</button></div>
+      </div>
+    </section>
+
+    <!-- TOTAL -->
+    <section class="sec" id="s-total">
+      <div class="topbar"><h2>Итог</h2><div class="pt-chip" id="chipTotal">Пациент не выбран</div></div>
+      <div class="card">
+        <div class="tot-card">
+          <div class="tot-row"><span class="muted">Выполнено (оплачено)</span><span class="c-green fw" id="tot_d">0 ₽</span></div>
+          <div class="tot-row"><span class="muted">Запланировано (ориент.)</span><span class="c-orange fw" id="tot_p">0 ₽</span></div>
+          <div class="tot-row"><span>Полный курс лечения</span><span id="tot_all">0 ₽</span></div>
+        </div>
+        <div class="field"><label>ЗАМЕТКА ПО ОПЛАТЕ</label><textarea id="payNote" rows="3" placeholder="Рассрочка, предоплата, страховка, скидка..."></textarea></div>
+        <div class="card-actions"><button class="btn pri" onclick="saveTreat()">💾 Сохранить</button></div>
+      </div>
+    </section>
+
+    <!-- SCHEDULE -->
+    <section class="sec" id="s-schedule">
+      <div class="topbar"><h2>Расписание</h2>
+        <div style="display:flex;gap:8px;align-items:center">
+          <button class="btn sm" onclick="schedPrev()">←</button>
+          <span id="schedTitle" class="month-title"></span>
+          <button class="btn sm" onclick="schedNext()">→</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-sub">Нажмите на день чтобы открыть запись пациентов. Двойной клик — отметить рабочим/выходным.</div>
+        <div class="cal-header" id="calHdr"></div>
+        <div class="cal-grid" id="calGrid"></div>
+        <div class="leg-row" style="margin-top:12px">
+          <div class="leg"><div class="ld" style="background:#E1F5EE;border-color:#5DCAA5"></div>Рабочий день</div>
+          <div class="leg"><div style="width:8px;height:8px;border-radius:50%;background:#0C447C;margin:2px"></div>Есть записи</div>
+        </div>
+      </div>
+      <div class="day-panel" id="dayPanel">
+        <div class="day-panel-hdr">
+          <div class="day-panel-title" id="dayPanelTitle">—</div>
+          <div style="display:flex;gap:8px">
+            <button class="btn sm pri" onclick="saveDayApts()">💾 Сохранить</button>
+            <button class="btn sm" onclick="closeDayPanel()">✕</button>
+          </div>
+        </div>
+        <div class="apt-list" id="aptList"></div>
+        <div style="background:var(--bg2);border:.5px solid var(--border);border-radius:var(--r);padding:14px">
+          <div style="font-size:11px;font-weight:700;color:var(--text3);margin-bottom:10px;letter-spacing:.05em">НОВАЯ ЗАПИСЬ</div>
+          <div class="apt-add">
+            <div class="field m0 apt-add-time"><label>ВРЕМЯ</label><input type="time" id="aptTime" value="09:00"/></div>
+            <div class="field m0 apt-add-name"><label>ПАЦИЕНТ</label><input type="text" id="aptName" placeholder="ФИО или выбрать..."/></div>
+            <div class="field m0 apt-add-note"><label>ПРОЦЕДУРА / ЗАМЕТКА</label><input type="text" id="aptNote" placeholder="Осмотр, лечение 16..."/></div>
+            <div class="field m0 apt-add-btn"><button class="btn pri" onclick="addApt()" style="width:100%">+ Добавить</button></div>
+          </div>
+          <div id="ptSuggest" style="margin-top:6px;display:none"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRICE -->
+    <section class="sec" id="s-price">
+      <div class="topbar"><h2>Прайс-лист</h2>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+          <input type="text" id="priceQ" placeholder="Поиск..." style="width:150px" oninput="filterPrice()"/>
+          <button class="btn sm pri" onclick="addCat()">+ Категория</button>
+          <button class="btn sm pri" onclick="addPriceItem()">+ Услуга</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-sub">Нажмите на название или цену — редактируйте прямо здесь. Жмите «Сохранить прайс» когда закончите.</div>
+        <div id="priceList"></div>
+        <div class="card-actions"><button class="btn pri" onclick="savePriceList()">💾 Сохранить прайс</button></div>
+      </div>
+    </section>
+
+    <!-- FILES SECTION -->
+    <section class="sec" id="s-files">
+      <div class="topbar"><h2>Файлы и снимки</h2><div class="pt-chip" id="chipFiles">Пациент не выбран</div></div>
+      <div class="card" style="margin-bottom:14px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+          <div style="font-size:13px;font-weight:600;color:var(--text)">Хранилище пациента</div>
+          <div style="font-size:12px;color:var(--text2)" id="storageInfo">—</div>
+        </div>
+        <div class="storage-bar"><div class="storage-fill" id="storageFill" style="width:0%"></div></div>
+        <div style="font-size:11px;color:var(--text3);margin-top:4px">Рекомендуем использовать Google Drive для КТ-снимков (4+ ГБ каждый). Ссылки сохраняются здесь.</div>
+      </div>
+      <div class="card">
+        <div class="card-sub">Загружайте снимки, рентген, документы пациента. Для КТ-снимков (4+ ГБ) добавляйте ссылку на Google Drive.</div>
+        <div class="file-zone" id="fileZone" onclick="document.getElementById('fileInput').click()" ondragover="fileDrag(event,true)" ondragleave="fileDrag(event,false)" ondrop="fileDrop(event)">
+          <div style="font-size:32px">📁</div>
+          <div style="font-size:14px;font-weight:600;color:var(--text);margin-top:6px">Нажмите или перетащите файлы</div>
+          <div style="font-size:12px;color:var(--text2);margin-top:4px">Изображения, PDF, документы</div>
+          <input type="file" id="fileInput" multiple accept="image/*,.pdf,.doc,.docx" style="display:none" onchange="addFiles(event)"/>
+        </div>
+        <div style="margin-top:14px;padding-top:14px;border-top:.5px solid var(--border)">
+          <div style="font-size:11px;font-weight:700;color:var(--text3);letter-spacing:.05em;margin-bottom:8px">ССЫЛКА НА GOOGLE DRIVE / КТ-СНИМОК</div>
+          <div style="display:flex;gap:8px">
+            <input type="text" id="gdriveName" placeholder="Название (КТ нижней челюсти 2024)" style="flex:1"/>
+            <input type="text" id="gdriveUrl" placeholder="https://drive.google.com/..." style="flex:2"/>
+            <button class="btn pri" onclick="addGdriveLink()" style="white-space:nowrap">+ Добавить</button>
+          </div>
+        </div>
+        <div id="fileList" style="margin-top:14px"></div>
+        <div class="card-actions"><button class="btn pri" onclick="saveFiles()">💾 Сохранить</button></div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- PATIENT MODAL -->
+<div class="modal-overlay" id="ptModal" onclick="if(event.target===this)closePtModal()">
+  <div class="modal">
+    <div class="mhdr"><div class="mtitle" id="ptModalTitle">Новый пациент</div><button class="mclose" onclick="closePtModal()">✕</button></div>
+    <div class="mbody">
+      <div class="field"><label>ФИО *</label><input type="text" id="m_name" placeholder="Иванова Мария Сергеевна"/></div>
+      <div class="frow">
+        <div class="field"><label>ТЕЛЕФОН</label><input type="text" id="m_phone" placeholder="+7 900 000-00-00"/></div>
+        <div class="field"><label>ДАТА РОЖДЕНИЯ</label><input type="date" id="m_dob"/></div>
+      </div>
+      <div class="field"><label>АЛЛЕРГИИ</label><input type="text" id="m_allergy" placeholder="Лидокаин, латекс..."/></div>
+      <div class="field"><label>ОСОБЕННОСТИ / ОПИСАНИЕ</label><textarea id="m_note" rows="3" placeholder="Бруксизм, повышенный рвотный рефлекс..."></textarea></div>
+    </div>
+    <div class="mfooter"><button class="btn" onclick="closePtModal()">Отмена</button><button class="btn pri" onclick="savePt()">Сохранить</button></div>
+  </div>
+</div>
+
+<!-- PRICE MODAL -->
+<div class="modal-overlay" id="priceModal" onclick="if(event.target===this)closePriceModal()">
+  <div class="modal">
+    <div class="mhdr"><div class="mtitle">Выбрать из прайса</div><button class="mclose" onclick="closePriceModal()">✕</button></div>
+    <div class="mbody" style="padding-bottom:0">
+      <input type="text" id="modalQ" placeholder="Поиск услуги..." oninput="renderModal()" style="margin-bottom:10px"/>
+      <div id="modalList" style="max-height:340px;overflow-y:auto"></div>
+    </div>
+    <div class="mfooter"><button class="btn" onclick="closePriceModal()">Закрыть</button></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="if(event.target===this)closeLb()">
+  <button class="lb-close" onclick="closeLb()">✕</button>
+  <img id="lbImg" src="" alt=""/>
+  <div class="lb-nav">
+    <button class="lb-btn" onclick="lbPrev()">← Пред.</button>
+    <span class="lb-counter" id="lbCounter"></span>
+    <button class="lb-btn" onclick="lbNext()">След. →</button>
+    <button class="lb-del" onclick="lbDelete()">🗑 Удалить</button>
+  </div>
+</div>
+
+<script type="module">
+import{initializeApp}from'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import{getFirestore,doc,getDoc,setDoc,collection,getDocs,addDoc,updateDoc,serverTimestamp}from'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+// ══════════════════════════════════════════════════
+//  ⚙️  НАСТРОЙКИ — ВСТАВЬ СВОИ ДАННЫЕ НИЖЕ
+// ══════════════════════════════════════════════════
+const CFG={
+  apiKey:"AIzaSyC8cNSPRebtht_EeyfgoX6hsr8yS0v6YSQ",
+  authDomain:"st-clinic-5918.firebaseapp.com",
+  projectId:"st-clinic-5918",
+  storageBucket:"st-clinic-5918.firebasestorage.app",
+  messagingSenderId:"494875696146",
+  appId:"1:494875696146:web:5a33a501e8d41855334ccb"
+};
+const PASSWORD="medst2025"; // ← поменяй свой пароль
+// ══════════════════════════════════════════════════
+
+const app=initializeApp(CFG);
+const db=getFirestore(app);
+
+// ─── AUTH ───
+window.doLogin=()=>{
+  if(document.getElementById('loginPass').value===PASSWORD){
+    localStorage.setItem('medst_ok','1');
+    document.getElementById('loginScreen').style.display='none';
+    document.getElementById('app').style.display='flex';
+    boot();
+  } else {
+    document.getElementById('loginErr').style.display='block';
+  }
+};
+window.doLogout=()=>{localStorage.removeItem('medst_ok');location.reload();};
+if(localStorage.getItem('medst_ok')){
+  document.getElementById('loginScreen').style.display='none';
+  document.getElementById('app').style.display='flex';
+}
+
+// ─── STATE ───
+let patients=[],curId=null,curName='';
+let teeth={},doneList=[],planList=[],payNote='';
+let priceData=defaultPrice();
+let schedData={},schedY=new Date().getFullYear(),schedM=new Date().getMonth();
+let curStatus='C',curTooth=null,modalTarget=null,editId=null;
+
+const upper=[18,17,16,15,14,13,12,11,21,22,23,24,25,26,27,28];
+const lower=[48,47,46,45,44,43,42,41,31,32,33,34,35,36,37,38];
+const wisdom=new Set([18,28,38,48]);
+
+const ST=[
+  {k:'H',l:'Здоров',i:'○',bg:'#fff',bc:'#ccc',tc:'#aaa'},
+  {k:'C',l:'Кариес',i:'◆',bg:'#FCEBEB',bc:'#F09595',tc:'#A32D2D'},
+  {k:'F',l:'Пломба',i:'■',bg:'#E1F5EE',bc:'#5DCAA5',tc:'#0F6E56'},
+  {k:'P',l:'Пульпит',i:'▲',bg:'#FAEEDA',bc:'#EF9F27',tc:'#854F0B'},
+  {k:'R',l:'Периодонтит',i:'◉',bg:'#EEEDFE',bc:'#AFA9EC',tc:'#534AB7'},
+  {k:'K',l:'Коронка',i:'⬡',bg:'#E6F1FB',bc:'#85B7EB',tc:'#185FA5'},
+  {k:'I',l:'Имплант',i:'✦',bg:'#FBEAF0',bc:'#ED93B1',tc:'#993556'},
+  {k:'M',l:'Удалён',i:'×',bg:'#F1EFE8',bc:'#B4B2A9',tc:'#5F5E5A'},
+  {k:'PL',l:'Планируется',i:'?',bg:'#EAF3DE',bc:'#97C459',tc:'#3B6D11'},
+];
+const SM={};ST.forEach(s=>SM[s.k]=s);
+
+// ─── BOOT ───
+async function boot(){
+  buildStatusBar();buildLegend();initTeeth();renderAll();
+  buildCalHdr();renderCal();
+  await loadPts();
+  await loadPrice();
+}
+if(localStorage.getItem('medst_ok'))boot();
+
+// ─── NAV ───
+window.nav=(sec,el)=>{
+  document.querySelectorAll('.sec').forEach(s=>s.className='sec');
+  document.getElementById('s-'+sec).className='sec on';
+  document.querySelectorAll('.ni,.bni').forEach(n=>n.classList.remove('on'));
+  document.querySelectorAll(`[data-s="${sec}"]`).forEach(n=>n.classList.add('on'));
+};
+
+// ─── TOAST ───
+const toast=msg=>{const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);};
+
+// ─── PATIENTS ───
+async function loadPts(){
+  try{
+    const snap=await getDocs(collection(db,'patients'));
+    patients=[];snap.forEach(d=>patients.push({id:d.id,...d.data()}));
+    patients.sort((a,b)=>(a.name||'').localeCompare(b.name||'','ru'));
+    renderPts();renderStats();
+  }catch(e){
+    document.getElementById('ptGrid').innerHTML='<div class="empty">⚠️ Ошибка Firebase.<br>Проверь config в index.html и правила Firestore.</div>';
+  }
+}
+window.renderPts=()=>{
+  const q=document.getElementById('ptSearch').value.toLowerCase();
+  const grid=document.getElementById('ptGrid');
+  const list=patients.filter(p=>(p.name||'').toLowerCase().includes(q)||(p.phone||'').includes(q));
+  if(!list.length){grid.innerHTML='<div class="empty">Пациенты не найдены</div>';return;}
+  grid.innerHTML=list.map(p=>{
+    const ini=(p.name||'?').split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+    const age=p.dob?getAge(p.dob):'';
+    return`<div class="pt-card" onclick="openPt('${p.id}')">
+      <div class="pt-hdr"><div class="avatar">${ini}</div>
+        <div><div class="pt-name">${p.name||'—'}</div>
+        <div class="pt-phone">${p.phone||''}${age?' · '+age+' л.':''}</div></div>
+      </div>
+      ${p.allergy?`<div class="pt-tags"><span class="tag tag-al">⚠ ${p.allergy}</span></div>`:''}
+      ${p.note?`<div class="pt-note">${p.note}</div>`:''}
+    </div>`;
+  }).join('');
+};
+const getAge=d=>{const b=new Date(d),n=new Date();let a=n.getFullYear()-b.getFullYear();if(n<new Date(n.getFullYear(),b.getMonth(),b.getDate()))a--;return a;};
+function renderStats(){
+  document.getElementById('statsRow').innerHTML=`
+    <div class="stat"><div class="stat-val">${patients.length}</div><div class="stat-lbl">Пациентов</div></div>
+    <div class="stat"><div class="stat-val">${new Date().toLocaleDateString('ru-RU').slice(0,5)}</div><div class="stat-lbl">Сегодня</div></div>`;
+}
+
+window.openPt=async id=>{
+  const p=patients.find(x=>x.id===id);if(!p)return;
+  curId=id;curName=p.name||'—';
+  ['chipFormula','chipDone','chipPlan','chipTotal','chipFiles'].forEach(c=>{const e=document.getElementById(c);if(e)e.textContent='🦷 '+curName;});
+  const sp=document.getElementById('curPt');sp.style.display='block';sp.textContent=curName;
+  initTeeth();doneList=[];planList=[];payNote='';
+  try{
+    const snap=await getDoc(doc(db,'patients',id,'data','record'));
+    if(snap.exists()){const d=snap.data();if(d.teeth)Object.assign(teeth,d.teeth);doneList=d.done||[];planList=d.plan||[];payNote=d.payNote||'';}
+  }catch(e){console.error(e);}
+  renderAll();renderDone();renderPlan();calcTotals();
+  document.getElementById('payNote').value=payNote;
+  // Load files
+  patientFiles=[];
+  try{
+    const fsnap=await getDoc(doc(db,'patients',id,'data','files'));
+    if(fsnap.exists()&&fsnap.data().files)patientFiles=fsnap.data().files;
+  }catch(e){}
+  renderFiles();
+  nav('formula');toast('Открыт: '+curName);
+};
+
+window.openPtModal=id=>{
+  editId=id||null;const p=id?patients.find(x=>x.id===id):null;
+  document.getElementById('ptModalTitle').textContent=p?'Редактировать пациента':'Новый пациент';
+  document.getElementById('m_name').value=p?.name||'';
+  document.getElementById('m_phone').value=p?.phone||'';
+  document.getElementById('m_dob').value=p?.dob||'';
+  document.getElementById('m_allergy').value=p?.allergy||'';
+  document.getElementById('m_note').value=p?.note||'';
+  document.getElementById('ptModal').classList.add('show');
+  setTimeout(()=>document.getElementById('m_name').focus(),100);
+};
+window.closePtModal=()=>document.getElementById('ptModal').classList.remove('show');
+window.savePt=async()=>{
+  const name=document.getElementById('m_name').value.trim();
+  if(!name){alert('Введите ФИО');return;}
+  const data={name,phone:document.getElementById('m_phone').value.trim(),dob:document.getElementById('m_dob').value,allergy:document.getElementById('m_allergy').value.trim(),note:document.getElementById('m_note').value.trim(),updatedAt:serverTimestamp()};
+  try{
+    if(editId)await updateDoc(doc(db,'patients',editId),data);
+    else{data.createdAt=serverTimestamp();await addDoc(collection(db,'patients'),data);}
+    window.closePtModal();await loadPts();toast('Пациент сохранён ✓');
+  }catch(e){alert('Ошибка Firebase. Проверь config.');}
+};
+
+// ─── TEETH ───
+function initTeeth(){teeth={};[...upper,...lower].forEach(n=>{teeth[n]={s:wisdom.has(n)?'W':'H',note:'',surface:'',date:'',photos:[]};});}
+function buildStatusBar(){
+  const bar=document.getElementById('statusBar');bar.innerHTML='';
+  ST.forEach(s=>{
+    const b=document.createElement('div');b.className='sbtn'+(s.k===curStatus?' sel':'');
+    b.style.cssText=`background:${s.bg};border-color:${s.bc};color:${s.tc}`;b.textContent=s.l;
+    b.onclick=()=>{curStatus=s.k;document.querySelectorAll('.sbtn').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');};
+    bar.appendChild(b);
+  });
+}
+function buildLegend(){
+  const l=document.getElementById('legend');l.innerHTML='';
+  ST.filter(s=>s.k!=='H').forEach(s=>{
+    const d=document.createElement('div');d.className='leg';
+    d.innerHTML=`<div class="ld" style="background:${s.bg};border-color:${s.bc}"></div><span>${s.l}</span>`;
+    l.appendChild(d);
+  });
+}
+function renderRow(nums,id){
+  const c=document.getElementById(id);c.innerHTML='';
+  nums.forEach(n=>{
+    const td=teeth[n],s=td.s==='W'?{i:'—',l:''}:(SM[td.s]||SM.H);
+    const el=document.createElement('div');el.className='tooth t-'+td.s;
+    el.innerHTML=`<span class="tn">${n}</span><span class="ti">${s.i}</span><span class="ts">${s.l}</span>`;
+    el.onclick=()=>handleTooth(n);c.appendChild(el);
+  });
+}
+function renderAll(){renderRow(upper,'upper');renderRow(lower,'lower');}
+function handleTooth(n){
+  if(teeth[n].s==='W')return;
+  if(curTooth===n){openDet(n);return;}
+  teeth[n].s=curStatus;renderAll();curTooth=n;openDet(n);
+}
+function openDet(n){
+  const td=teeth[n],s=SM[td.s]||SM.H;
+  document.getElementById('detNum').textContent='Зуб '+n;
+  const sl=document.getElementById('detSlbl');sl.textContent=s.l;sl.style.color=s.tc;
+  document.getElementById('detSurf').value=td.surface||'';
+  document.getElementById('detNote').value=td.note||'';
+  document.getElementById('detDate').value=td.date||'';
+  renderPhotos();
+  const p=document.getElementById('detPanel');p.className='det-panel show';p.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+window.closeDet=()=>{document.getElementById('detPanel').className='det-panel';curTooth=null;};
+window.saveDet=()=>{
+  if(curTooth===null)return;
+  teeth[curTooth].surface=document.getElementById('detSurf').value;
+  teeth[curTooth].note=document.getElementById('detNote').value;
+  teeth[curTooth].date=document.getElementById('detDate').value;
+  window.closeDet();toast('Зуб сохранён');
+};
+window.addPhotos=e=>{
+  if(curTooth===null)return;
+  Array.from(e.target.files).forEach(f=>{
+    const r=new FileReader();
+    r.onload=ev=>{
+      teeth[curTooth].photos=teeth[curTooth].photos||[];
+      teeth[curTooth].photos.push(ev.target.result);
+      renderPhotos();
+    };r.readAsDataURL(f);
+  });e.target.value='';
+};
+function renderPhotos(){
+  const pg=document.getElementById('photosGrid');pg.innerHTML='';
+  const photos=teeth[curTooth]?.photos||[];
+  photos.forEach((src,i)=>{
+    const img=document.createElement('img');
+    img.src=src;img.className='photo-thumb';
+    img.onclick=()=>openLb(i);
+    pg.appendChild(img);
+  });
+}
+// LIGHTBOX
+let lbIndex=0,lbPhotos=[];
+function openLb(i){
+  lbPhotos=teeth[curTooth]?.photos||[];
+  if(!lbPhotos.length)return;
+  lbIndex=i;
+  document.getElementById('lbImg').src=lbPhotos[lbIndex];
+  document.getElementById('lbCounter').textContent=`${lbIndex+1} / ${lbPhotos.length}`;
+  document.getElementById('lightbox').className='lightbox show';
+}
+window.closeLb=()=>document.getElementById('lightbox').className='lightbox';
+window.lbNext=()=>{lbIndex=(lbIndex+1)%lbPhotos.length;document.getElementById('lbImg').src=lbPhotos[lbIndex];document.getElementById('lbCounter').textContent=`${lbIndex+1} / ${lbPhotos.length}`;};
+window.lbPrev=()=>{lbIndex=(lbIndex-1+lbPhotos.length)%lbPhotos.length;document.getElementById('lbImg').src=lbPhotos[lbIndex];document.getElementById('lbCounter').textContent=`${lbIndex+1} / ${lbPhotos.length}`;};
+window.lbDelete=()=>{
+  if(!curTooth)return;
+  teeth[curTooth].photos.splice(lbIndex,1);
+  lbPhotos=teeth[curTooth].photos;
+  if(!lbPhotos.length){closeLb();renderPhotos();return;}
+  lbIndex=Math.min(lbIndex,lbPhotos.length-1);
+  document.getElementById('lbImg').src=lbPhotos[lbIndex];
+  document.getElementById('lbCounter').textContent=`${lbIndex+1} / ${lbPhotos.length}`;
+  renderPhotos();
+};
+document.addEventListener('keydown',e=>{
+  if(document.getElementById('lightbox').classList.contains('show')){
+    if(e.key==='ArrowRight')lbNext();
+    else if(e.key==='ArrowLeft')lbPrev();
+    else if(e.key==='Escape')closeLb();
+  }
+});
+
+// FILES SECTION
+let patientFiles=[];
+window.addFiles=e=>{
+  Array.from(e.target.files).forEach(f=>{
+    const r=new FileReader();
+    r.onload=ev=>{
+      patientFiles.push({type:'file',name:f.name,size:f.size,data:ev.target.result,date:new Date().toLocaleDateString('ru-RU')});
+      renderFiles();
+    };r.readAsDataURL(f);
+  });e.target.value='';
+};
+window.fileDrag=(e,on)=>{e.preventDefault();document.getElementById('fileZone').classList.toggle('drag',on);};
+window.fileDrop=e=>{e.preventDefault();fileDrag(e,false);const dt=e.dataTransfer;if(dt.files.length){const ev={target:{files:dt.files,value:''}};addFiles(ev);}};
+window.addGdriveLink=()=>{
+  const name=document.getElementById('gdriveName').value.trim();
+  const url=document.getElementById('gdriveUrl').value.trim();
+  if(!name||!url){toast('Введите название и ссылку');return;}
+  if(!url.startsWith('http')){toast('Введите корректную ссылку');return;}
+  patientFiles.push({type:'link',name,url,date:new Date().toLocaleDateString('ru-RU'),icon:'🔗'});
+  document.getElementById('gdriveName').value='';
+  document.getElementById('gdriveUrl').value='';
+  renderFiles();
+};
+function renderFiles(){
+  const list=document.getElementById('fileList');
+  if(!patientFiles.length){list.innerHTML='<div class="empty" style="padding:24px">Нет файлов</div>';updateStorage();return;}
+  list.innerHTML='<div style="border:.5px solid var(--border);border-radius:var(--r);overflow:hidden">'+
+    patientFiles.map((f,i)=>{
+      const icon=f.type==='link'?'🔗':f.name.match(/\.(jpe?g|png|gif|webp)$/i)?'🖼':f.name.match(/\.pdf$/i)?'📄':'📎';
+      const size=f.size?formatSize(f.size):'';
+      return `<div class="file-item">
+        <div class="file-icon">${icon}</div>
+        <div>
+          <div class="file-name">${f.name}</div>
+          <div class="file-meta">${f.date}${size?' · '+size:''}</div>
+        </div>
+        <div style="display:flex;gap:6px;align-items:center">
+          ${f.type==='link'?`<a href="${f.url}" target="_blank" class="btn sm">Открыть</a>`:
+            f.name.match(/\.(jpe?g|png|gif|webp)$/i)?`<button class="btn sm" onclick="previewFile(${i})">👁</button>`:''}
+          ${f.type==='file'&&f.data?`<a href="${f.data}" download="${f.name}" class="btn sm">↓</a>`:''}
+          <button class="del" onclick="delFile(${i})">×</button>
+        </div>
+      </div>`;
+    }).join('')+'</div>';
+  updateStorage();
+}
+function formatSize(b){if(b<1024)return b+'B';if(b<1048576)return(b/1024).toFixed(1)+'KB';if(b<1073741824)return(b/1048576).toFixed(1)+'MB';return(b/1073741824).toFixed(2)+'GB';}
+function updateStorage(){
+  const total=patientFiles.reduce((s,f)=>s+(f.size||0),0);
+  const limit=50*1024*1024; // 50MB display limit
+  const pct=Math.min(total/limit*100,100);
+  document.getElementById('storageFill').style.width=pct+'%';
+  document.getElementById('storageInfo').textContent=`${formatSize(total)} · ${patientFiles.length} файл(ов)`;
+}
+window.delFile=i=>{patientFiles.splice(i,1);renderFiles();};
+window.previewFile=i=>{
+  const f=patientFiles[i];
+  if(!f?.data)return;
+  const photos=patientFiles.filter(x=>x.data&&x.name.match(/\.(jpe?g|png|gif|webp)$/i));
+  const pi=photos.findIndex(x=>x===f);
+  lbPhotos=photos.map(x=>x.data);
+  lbIndex=Math.max(pi,0);
+  document.getElementById('lbImg').src=lbPhotos[lbIndex];
+  document.getElementById('lbCounter').textContent=`${lbIndex+1} / ${lbPhotos.length}`;
+  document.getElementById('lightbox').className='lightbox show';
+};
+window.saveFiles=async()=>{
+  if(!curId){toast('Выберите пациента');return;}
+  try{
+    const toSave=patientFiles.map(f=>({type:f.type,name:f.name,size:f.size||0,url:f.url||'',date:f.date,data:f.data||''}));
+    await setDoc(doc(db,'patients',curId,'data','files'),{files:toSave,updatedAt:serverTimestamp()});
+    toast('Файлы сохранены ✓');
+  }catch(e){toast('Ошибка: файлы слишком большие для Firebase. Используйте ссылки Google Drive.');}
+};
+window.saveFormula=async()=>{if(!curId){toast('Выберите пациента');return;}await saveRec();toast('Формула сохранена ✓');};
+
+// ─── TREATMENT ───
+const fmt=n=>Math.round(n).toLocaleString('ru-RU')+' ₽';
+function calcTotals(){
+  const d=doneList.reduce((s,x)=>s+(+x.price||0),0);
+  const p=planList.reduce((s,x)=>s+(+x.price||0),0);
+  document.getElementById('doneSum').textContent=fmt(d);
+  document.getElementById('planSum').textContent=fmt(p);
+  document.getElementById('tot_d').textContent=fmt(d);
+  document.getElementById('tot_p').textContent=fmt(p);
+  document.getElementById('tot_all').textContent=fmt(d+p);
+}
+function renderDone(){
+  document.getElementById('doneTb').innerHTML=doneList.map((t,i)=>`<tr>
+    <td style="color:var(--text2);white-space:nowrap">${t.date||'—'}</td>
+    <td>${t.proc}</td><td>${t.tooth||'—'}</td><td>${t.surface||'—'}</td>
+    <td style="white-space:nowrap;font-weight:700">${fmt(t.price||0)}</td>
+    <td><button class="del" onclick="delDone(${i})">×</button></td></tr>`).join('');
+  calcTotals();
+}
+function renderPlan(){
+  document.getElementById('planTb').innerHTML=planList.map((t,i)=>`<tr>
+    <td><span class="badge badge-warn">Ожидает</span></td>
+    <td>${t.proc}</td><td>${t.tooth||'—'}</td><td>${t.surface||'—'}</td>
+    <td style="white-space:nowrap;font-weight:700">~${fmt(t.price||0)}</td>
+    <td><button class="del" onclick="delPlan(${i})">×</button></td></tr>`).join('');
+  calcTotals();
+}
+window.addDone=()=>{
+  const proc=document.getElementById('d_proc').value.trim();if(!proc)return;
+  doneList.push({date:new Date().toLocaleDateString('ru-RU'),proc,tooth:document.getElementById('d_tooth').value.trim(),surface:document.getElementById('d_surf').value.trim(),price:+document.getElementById('d_price').value||0});
+  ['d_proc','d_tooth','d_surf','d_price'].forEach(id=>document.getElementById(id).value='');renderDone();
+};
+window.addPlan=()=>{
+  const proc=document.getElementById('p_proc').value.trim();if(!proc)return;
+  planList.push({proc,tooth:document.getElementById('p_tooth').value.trim(),surface:document.getElementById('p_surf').value.trim(),price:+document.getElementById('p_price').value||0});
+  ['p_proc','p_tooth','p_surf','p_price'].forEach(id=>document.getElementById(id).value='');renderPlan();
+};
+window.delDone=i=>{doneList.splice(i,1);renderDone();};
+window.delPlan=i=>{planList.splice(i,1);renderPlan();};
+window.saveTreat=async()=>{if(!curId){toast('Выберите пациента');return;}payNote=document.getElementById('payNote').value;await saveRec();toast('Сохранено ✓');};
+async function saveRec(){
+  await setDoc(doc(db,'patients',curId,'data','record'),{teeth:JSON.parse(JSON.stringify(teeth)),done:doneList,plan:planList,payNote,updatedAt:serverTimestamp()},{merge:true});
+}
+
+// ─── PRICE ───
+function defaultPrice(){return[
+  {cat:'Диагностика',items:[{name:'Первичный осмотр + план лечения',price:''},{name:'Прицельный снимок (1 зуб)',price:''},{name:'Панорамный снимок (ОПТГ)',price:''}]},
+  {cat:'Профилактика',items:[{name:'Профессиональная гигиена (AirFlow)',price:''},{name:'Покрытие фтором',price:''}]},
+  {cat:'Терапия',items:[{name:'Лечение кариеса, 1 поверхность',price:''},{name:'Лечение кариеса, 2 поверхности',price:''},{name:'Лечение кариеса, 3+ поверхности',price:''},{name:'Пломба фотополимерная',price:''},{name:'Временная пломба',price:''}]},
+  {cat:'Эндодонтия',items:[{name:'Лечение пульпита, 1 канал',price:''},{name:'Лечение пульпита, 2 канала',price:''},{name:'Лечение пульпита, 3+ канала',price:''},{name:'Лечение периодонтита, 1 канал',price:''},{name:'Лечение периодонтита, 2 канала',price:''},{name:'Лечение периодонтита, 3+ канала',price:''},{name:'Повторное лечение канала',price:''}]},
+  {cat:'Хирургия',items:[{name:'Удаление зуба (простое)',price:''},{name:'Удаление зуба (сложное / зуб мудрости)',price:''},{name:'Разрез, дренаж',price:''}]},
+  {cat:'Протезирование',items:[{name:'Коронка металлокерамика',price:''},{name:'Коронка диоксид циркония',price:''},{name:'Временная коронка',price:''}]},
+  {cat:'Имплантация',items:[{name:'Имплант (под ключ)',price:''},{name:'Консультация имплантолога',price:''}]},
+  {cat:'Эстетика',items:[{name:'Виниры (1 зуб)',price:''},{name:'Профессиональное отбеливание',price:''}]},
+  {cat:'Ортодонтия',items:[{name:'Капа от бруксизма',price:''},{name:'Консультация ортодонта',price:''}]},
+];}
+async function loadPrice(){
+  try{const s=await getDoc(doc(db,'clinic','pricelist'));if(s.exists()&&s.data().data)priceData=s.data().data;}catch(e){}
+  renderPrice();
+}
+function renderPrice(filter){
+  const list=document.getElementById('priceList');list.innerHTML='';
+  priceData.forEach((cat,ci)=>{
+    const items=filter?cat.items.filter(i=>i.name.toLowerCase().includes(filter)):cat.items;
+    if(!items.length&&filter)return;
+    const div=document.createElement('div');
+    const hdr=document.createElement('div');hdr.className='pcat';hdr.contentEditable=true;hdr.textContent=cat.cat;
+    hdr.onblur=()=>priceData[ci].cat=hdr.textContent.trim();div.appendChild(hdr);
+    items.forEach(item=>{
+      const ii=cat.items.indexOf(item);
+      const row=document.createElement('div');row.className='prow';
+      const nm=document.createElement('div');nm.className='pname';nm.contentEditable=true;nm.textContent=item.name;
+      nm.onblur=()=>priceData[ci].items[ii].name=nm.textContent.trim();
+      const vl=document.createElement('div');vl.className='pval'+(item.price?'':' empty');vl.contentEditable=true;
+      vl.textContent=item.price?item.price+' ₽':'— введите цену';
+      vl.onfocus=function(){if(!priceData[ci].items[ii].price)this.textContent='';this.classList.remove('empty');};
+      vl.onblur=function(){const raw=this.textContent.replace(/[^\d]/g,'');priceData[ci].items[ii].price=raw;this.textContent=raw?raw+' ₽':'— введите цену';if(!raw)this.classList.add('empty');};
+      const dl=document.createElement('button');dl.className='del';dl.textContent='×';dl.onclick=()=>{priceData[ci].items.splice(ii,1);renderPrice();};
+      row.appendChild(nm);row.appendChild(vl);row.appendChild(dl);div.appendChild(row);
+    });list.appendChild(div);
+  });
+}
+window.filterPrice=()=>renderPrice(document.getElementById('priceQ').value.toLowerCase()||undefined);
+window.addCat=()=>{const n=prompt('Название новой категории:');if(n){priceData.push({cat:n,items:[]});renderPrice();}};
+window.addPriceItem=()=>{
+  const names=priceData.map((c,i)=>`${i}: ${c.cat}`).join('\n');
+  const ci=parseInt(prompt('В какую категорию добавить?\n\n'+names+'\n\nВведите номер:'));
+  if(!isNaN(ci)&&priceData[ci]){priceData[ci].items.push({name:'Новая услуга',price:''});renderPrice();toast('Услуга добавлена');}
+};
+window.savePriceList=async()=>{
+  try{await setDoc(doc(db,'clinic','pricelist'),{data:priceData,updatedAt:serverTimestamp()});toast('Прайс сохранён ✓');}
+  catch(e){toast('Ошибка сохранения');}
+};
+
+// ─── PRICE MODAL ───
+window.openPriceModal=t=>{modalTarget=t;document.getElementById('modalQ').value='';renderModal();document.getElementById('priceModal').classList.add('show');};
+window.closePriceModal=()=>document.getElementById('priceModal').classList.remove('show');
+window.renderModal=()=>{
+  const q=document.getElementById('modalQ').value.toLowerCase();
+  const list=document.getElementById('modalList');list.innerHTML='';
+  priceData.forEach(cat=>cat.items.filter(i=>!q||i.name.toLowerCase().includes(q)).forEach(item=>{
+    const row=document.createElement('div');row.className='price-pick-item';
+    row.innerHTML=`<div class="ppi-name">${item.name}</div><div class="ppi-meta">${item.price?item.price+' ₽':'цена не задана'} · ${cat.cat}</div>`;
+    row.onclick=()=>{
+      const p=modalTarget==='done'?'d':'p';
+      document.getElementById(p+'_proc').value=item.name;
+      document.getElementById(p+'_price').value=item.price||'';
+      window.closePriceModal();nav(modalTarget);
+    };list.appendChild(row);
+  }));
+  if(!list.children.length)list.innerHTML='<div style="padding:20px;text-align:center;color:var(--text2)">Ничего не найдено</div>';
+};
+
+// ─── SCHEDULE ───
+function buildCalHdr(){
+  const h=document.getElementById('calHdr');h.innerHTML='';
+  ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'].forEach(d=>{const e=document.createElement('div');e.className='cal-dn';e.textContent=d;h.appendChild(e);});
+}
+function renderCal(){
+  const months=['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
+  document.getElementById('schedTitle').textContent=`${months[schedM]} ${schedY}`;
+  const key=`${schedY}-${String(schedM+1).padStart(2,'0')}`;
+  if(!schedData[key])schedData[key]={work:new Set(),apts:{}};
+  const {work,apts}=schedData[key];
+  const grid=document.getElementById('calGrid');grid.innerHTML='';
+  const first=new Date(schedY,schedM,1).getDay();
+  for(let i=0;i<(first===0?6:first-1);i++)grid.appendChild(document.createElement('div'));
+  const days=new Date(schedY,schedM+1,0).getDate(),today=new Date();
+  for(let d=1;d<=days;d++){
+    const dow=new Date(schedY,schedM,d).getDay();
+    const isToday=today.getFullYear()===schedY&&today.getMonth()===schedM&&today.getDate()===d;
+    const hasApts=apts[d]&&apts[d].length>0;
+    const el=document.createElement('div');
+    el.className='cal-day'+(work.has(d)?' work':'')+(dow===0||dow===6?' off':'')+(isToday?' today':'')+(hasApts?' has-apts':'');
+    el.textContent=d;
+    let clicks=0,clickTimer=null;
+    el.onclick=()=>{
+      clicks++;
+      if(clicks===1){
+        clickTimer=setTimeout(()=>{clicks=0;openDayPanel(d);},280);
+      }else{
+        clearTimeout(clickTimer);clicks=0;
+        work.has(d)?work.delete(d):work.add(d);renderCal();
+      }
+    };
+    grid.appendChild(el);
+  }
+}
+let curDay=null;
+function openDayPanel(d){
+  curDay=d;
+  const key=`${schedY}-${String(schedM+1).padStart(2,'0')}`;
+  if(!schedData[key])schedData[key]={work:new Set(),apts:{}};
+  if(!schedData[key].apts[d])schedData[key].apts[d]=[];
+  const months=['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
+  const dow=['вс','пн','вт','ср','чт','пт','сб'][new Date(schedY,schedM,d).getDay()];
+  document.getElementById('dayPanelTitle').textContent=`${dow}, ${d} ${months[schedM]} ${schedY}`;
+  renderApts();
+  const panel=document.getElementById('dayPanel');
+  panel.className='day-panel show';
+  panel.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+window.closeDayPanel=()=>{document.getElementById('dayPanel').className='day-panel';curDay=null;};
+function renderApts(){
+  if(curDay===null)return;
+  const key=`${schedY}-${String(schedM+1).padStart(2,'0')}`;
+  const apts=(schedData[key].apts[curDay]||[]).slice().sort((a,b)=>a.time.localeCompare(b.time));
+  const list=document.getElementById('aptList');
+  if(!apts.length){list.innerHTML='<div style="text-align:center;padding:16px;color:var(--text2);font-size:13px">Нет записей на этот день</div>';return;}
+  list.innerHTML=apts.map((a,i)=>`
+    <div class="apt-item">
+      <div class="apt-time">${a.time}</div>
+      <div>
+        <div class="apt-name">${a.name}</div>
+        ${a.note?`<div class="apt-note">${a.note}</div>`:''}
+      </div>
+      <button class="del" onclick="delApt(${i})">×</button>
+    </div>`).join('');
+}
+window.delApt=i=>{
+  const key=`${schedY}-${String(schedM+1).padStart(2,'0')}`;
+  const apts=schedData[key].apts[curDay].slice().sort((a,b)=>a.time.localeCompare(b.time));
+  schedData[key].apts[curDay]=schedData[key].apts[curDay].filter(a=>a!==apts[i]);
+  renderApts();renderCal();
+};
+window.addApt=()=>{
+  const time=document.getElementById('aptTime').value||'09:00';
+  const name=document.getElementById('aptName').value.trim();
+  if(!name){toast('Введите имя пациента');document.getElementById('aptName').focus();return;}
+  const note=document.getElementById('aptNote').value.trim();
+  const key=`${schedY}-${String(schedM+1).padStart(2,'0')}`;
+  if(!schedData[key].apts[curDay])schedData[key].apts[curDay]=[];
+  schedData[key].apts[curDay].push({time,name,note});
+  schedData[key].work.add(curDay);
+  document.getElementById('aptName').value='';
+  document.getElementById('aptNote').value='';
+  document.getElementById('aptTime').value=nextTime(time);
+  document.getElementById('ptSuggest').style.display='none';
+  renderApts();renderCal();
+};
+function nextTime(t){
+  const [h,m]=t.split(':').map(Number);
+  const total=h*60+m+30;
+  return `${String(Math.min(Math.floor(total/60),23)).padStart(2,'0')}:${String(total%60).padStart(2,'0')}`;
+}
+// Autocomplete
+document.addEventListener('input',e=>{
+  if(e.target.id!=='aptName')return;
+  const q=e.target.value.toLowerCase().trim();
+  const sug=document.getElementById('ptSuggest');
+  if(!q||!patients.length){sug.style.display='none';return;}
+  const matches=patients.filter(p=>(p.name||'').toLowerCase().includes(q)).slice(0,5);
+  if(!matches.length){sug.style.display='none';return;}
+  sug.style.display='block';
+  sug.innerHTML='<div style="background:var(--bg2);border:.5px solid var(--border);border-radius:var(--r);overflow:hidden;margin-top:4px">'+
+    matches.map(p=>`<div onclick="pickPt('${p.name.replace(/'/g,"\\'")}','${(p.phone||'').replace(/'/g,"\\'")}') " style="padding:8px 12px;cursor:pointer;font-size:13px;border-bottom:.5px solid var(--border)" onmouseover="this.style.background='var(--bg3)'" onmouseout="this.style.background=''">${p.name}${p.phone?` <span style="color:var(--text2);font-size:11px">${p.phone}</span>`:''}</div>`).join('')+
+  '</div>';
+});
+window.pickPt=(name)=>{
+  document.getElementById('aptName').value=name;
+  document.getElementById('ptSuggest').style.display='none';
+  document.getElementById('aptNote').focus();
+};
+document.addEventListener('keydown',e=>{
+  if(e.target.id==='aptName'&&e.key==='Enter')window.addApt();
+  if(e.target.id==='aptNote'&&e.key==='Enter')window.addApt();
+});
+window.schedPrev=()=>{if(--schedM<0){schedM=11;schedY--;}renderCal();closeDayPanel();};
+window.schedNext=()=>{if(++schedM>11){schedM=0;schedY++;}renderCal();closeDayPanel();};
+window.saveDayApts=async()=>{
+  if(curDay===null)return;
+  const key=`${schedY}-${String(schedM+1).padStart(2,'0')}`;
+  const d=schedData[key];
+  try{
+    await setDoc(doc(db,'clinic','schedule_'+key),{
+      days:[...d.work],
+      apts:d.apts,
+      updatedAt:serverTimestamp()
+    });
+    toast('Расписание сохранено ✓');
+  }catch(e){toast('Ошибка сохранения');}
+};
+</script>
+</body>
+</html>
